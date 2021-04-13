@@ -1,29 +1,54 @@
-import React, { useState } from "react"
+import React, { useState, useCallback } from "react"
+import Modal from "../components/Modal"
 import Gallery from "react-photo-gallery"
-import Lightbox from 'react-image-lightbox'
-import "react-image-lightbox/style.css"
+import ImageGallery from "react-image-gallery"
 import { photos } from "../assets/photos"
+import './Arts.css'
 
 function Arts() {
-  const [artIdx, setArtIdx] = useState(0)
-  const [isOpen, setIsOpen] = useState(false)
+  const [focus, setFocus] = useState(false)
+  const [focusIdx, setFocusIdx] = useState(0)
 
-  const openLightbox = () => {
-    setIsOpen(true)
+  const handleTouchMove = useCallback((e) => {
+    e.preventDefault()
+  }, [])
+
+  const rejectScroll = () => {
+    document.body.style.overflow = 'hidden'
+    document.body.addEventListener('touchmove', handleTouchMove, {
+      capture: false,
+      once: false,
+      passive: false
+    })
   }
+
+  const allowScroll = () => {
+    document.body.style.overflow = 'auto'
+    document.body.removeEventListener('touchmove', handleTouchMove)
+  }
+
+  const focusHandler = (event, { index }) => {
+    rejectScroll()
+
+    setFocus(true)
+    setFocusIdx(index)
+  }
+
+  // function getMeta(url){   
+  //   const img = new Image();
+  //   img.addEventListener("load", function(){
+  //       alert( this.naturalWidth +' '+ this.naturalHeight );
+  //   });
+  //   img.src = url;
+  // }
 
   return (
     <div id='arts'>
-      <Gallery photos={photos} onClick={() => openLightbox()} />
-      {isOpen && 
-        <Lightbox
-        mainSrc={photos[artIdx].src}
-        nextSrc={photos[(artIdx + 1) % photos.length].src}
-        prevSrc={photos[(artIdx + photos.length - 1) % photos.length].src}
-        onCloseRequest={() => setIsOpen(false)}
-        onMovePrevRequest={() => setArtIdx((artIdx + photos.length - 1) % photos.length)}
-        onMoveNextRequest={() => setArtIdx((artIdx + 1) % photos.length)}
-      />
+      <Gallery photos={photos.map((elem) => { return { ...elem, 'src': elem['original'] } })} onClick={focusHandler} />
+      {focus &&
+        <Modal visible={focus} setVisible={setFocus} allowScroll={allowScroll}>
+          <ImageGallery items={photos} startIndex={focusIdx}></ImageGallery>
+        </Modal>
       }
     </div>
   )
