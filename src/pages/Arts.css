@@ -15,10 +15,13 @@
 .image-gallery-slide-wrapper {
   height: 60%;
   max-height: 60%;
-  overflow-y: hidden;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
 }
 
 .image-gallery-image {
+  
 }
 
 .image-gallery-thumbnails-wrapper {
