@@ -42,15 +42,15 @@ function Arts() {
     return { 'width': img.width, 'height': img.height, 'src': img.src }
   }
 
-  const getImgs = async () => {
-    return await Promise.all(photos.map(async (elem) => {
-      const meta = await getMeta(elem['original'])
-      return { ...elem, ...meta } 
-    }))
-  }
-
   useEffect(() => {
     async function fetchData() {
+      const getImgs = async () => {
+        return await Promise.all(photos.map(async (elem) => {
+          const meta = await getMeta(elem['original'])
+          return { ...elem, ...meta } 
+        }))
+      }
+
       setImages(await getImgs())
     }
     fetchData()
