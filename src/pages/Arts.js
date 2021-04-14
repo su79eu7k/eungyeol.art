@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react"
+import React, { useState, useEffect, useCallback } from "react"
 import Modal from "../components/Modal"
 import Gallery from "react-photo-gallery"
 import ImageGallery from "react-image-gallery"
@@ -6,6 +6,7 @@ import { photos } from "../assets/photos"
 import './Arts.css'
 
 function Arts() {
+  const [images, setImages] = useState(null)
   const [focus, setFocus] = useState(false)
   const [focusIdx, setFocusIdx] = useState(0)
 
@@ -34,20 +35,35 @@ function Arts() {
     setFocusIdx(index)
   }
 
-  // function getMeta(url){   
-  //   const img = new Image();
-  //   img.addEventListener("load", function(){
-  //       alert( this.naturalWidth +' '+ this.naturalHeight );
-  //   });
-  //   img.src = url;
-  // }
+  const getMeta = async (url) => {
+    const img = new Image()
+    img.src = url
+    await img.decode()
+    return { 'width': img.width, 'height': img.height, 'src': img.src }
+  }
+
+  const getImgs = async () => {
+    return await Promise.all(photos.map(async (elem) => {
+      const meta = await getMeta(elem['original'])
+      return { ...elem, ...meta } 
+    }))
+  }
+
+  useEffect(() => {
+    async function fetchData() {
+      setImages(await getImgs())
+    }
+    fetchData()
+  }, [])
 
   return (
     <div id='arts'>
-      <Gallery photos={photos.map((elem) => { return { ...elem, 'src': elem['original'] } })} onClick={focusHandler} />
+      {images && 
+      <Gallery photos={images} onClick={focusHandler} />
+      }
       {focus &&
         <Modal visible={focus} setVisible={setFocus} allowScroll={allowScroll}>
-          <ImageGallery items={photos} startIndex={focusIdx}></ImageGallery>
+          <ImageGallery items={images} startIndex={focusIdx}></ImageGallery>
         </Modal>
       }
     </div>
