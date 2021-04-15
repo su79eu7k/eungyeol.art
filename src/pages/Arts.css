@@ -19,8 +19,6 @@
   justify-content: center;
 }
 
-.image-gallery-swipe {
-}
-
-.image-gallery-thumbnails-wrapper {
+.image-gallery-content .image-gallery-slide .image-gallery-image {
+  max-height: calc(100vh - 220px);
 }

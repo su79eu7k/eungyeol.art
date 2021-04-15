@@ -43,7 +43,7 @@ const ModalOverlay = styled.div`
   left: 0;
   bottom: 0;
   right: 0;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.9);
   z-index: 999;
   visibility: ${(props) => (props.visible ? 'visible' : 'hidden')};
   transition: visibility 1s linear;
