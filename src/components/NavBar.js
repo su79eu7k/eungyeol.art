@@ -57,7 +57,7 @@ function NavBar () {
   return (
     <StyledHeader>
       <StyledLogo>
-        SeogGyeong.art
+        SeokGyeong.art
       </StyledLogo>
       <StyledLogoSub>
         석경 한국화
