@@ -13,7 +13,7 @@ const StyledHeader = styled.header`
 const StyledLogo = styled.div`
   color: #443c36;
   font-family: 'Beth Ellen', cursive;
-  font-size: 8vh;
+  font-size: 6vh;
   @media (max-width: 600px) {
     font-size: 5vh;
   }
@@ -57,16 +57,16 @@ function NavBar () {
   return (
     <StyledHeader>
       <StyledLogo>
-        EunGyeol.art
+        SeogGyeong.art
       </StyledLogo>
       <StyledLogoSub>
-        은결 한국화
+        석경 한국화
       </StyledLogoSub>
       <StyledNav>
         <ul>
           <li><NavLink to='/'>Home</NavLink></li>
-          <li><NavLink to='/about'>About</NavLink></li>
           <li><NavLink to='/arts'>Gallery</NavLink></li>
+          <li><NavLink to='/about'>About</NavLink></li>
           <li><NavLink to='/contact'>Contact</NavLink></li>
         </ul>
       </StyledNav>

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react"
 import Modal from "../components/Modal"
 import Gallery from "react-photo-gallery"
 import ImageGallery from "react-image-gallery"
-import { photos } from "../assets/photos"
+import { photos } from "../photos"
 import './Arts.css'
 
 function Arts() {
