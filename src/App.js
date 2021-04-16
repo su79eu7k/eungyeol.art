@@ -1,12 +1,26 @@
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom'
+import styled from 'styled-components'
 import NavBar from './components/NavBar'
+import Footer from './components/Footer'
 import About from './pages/About'
 import Arts from './pages/Arts'
 import Landing from './pages/Landing'
 
+const StyledContainer = styled.div`
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: stretch;
+
+  & main {
+    min-height: 60vh;
+  }
+`
+
 function App() {
   return (
     <BrowserRouter>
+    <StyledContainer>
       <NavBar />
       <main>
         <Switch>
@@ -22,6 +36,8 @@ function App() {
           </Route>
         </Switch>
       </main>
+      <Footer />
+      </StyledContainer>
     </BrowserRouter>
   );
 }

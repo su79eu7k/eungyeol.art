@@ -13,9 +13,9 @@ const StyledHeader = styled.header`
 const StyledLogo = styled.div`
   color: #443c36;
   font-family: 'Beth Ellen', cursive;
-  font-size: 6vh;
+  font-size: 5vh;
   @media (max-width: 600px) {
-    font-size: 5vh;
+    font-size: 4vh;
   }
 `
 
