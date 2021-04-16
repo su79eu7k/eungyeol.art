@@ -8,6 +8,7 @@ const StyledAbout = styled.div`
   justify-content: center;
   align-items: center;
   font-family: 'Roboto', sans-serif;
+  overflow-x: hidden;
 `
 
 const StyledPhoto = styled.div`

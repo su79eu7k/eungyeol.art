@@ -6,6 +6,7 @@ const StyledFooter = styled.header`
   color: #857e7a;
   font-family: 'Roboto', sans-serif;
   font-size: .6rem;
+  margin-top: auto;
   padding: .8vh;
   text-align: center;
 `

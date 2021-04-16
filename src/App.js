@@ -11,9 +11,10 @@ const StyledContainer = styled.div`
   flex-flow: column nowrap;
   justify-content: center;
   align-items: stretch;
-
+  min-height: inherit;
   & main {
-    min-height: 60vh;
+    padding-top: 5vh;
+    padding-bottom: 5vh;
   }
 `
 

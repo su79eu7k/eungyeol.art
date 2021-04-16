@@ -5,9 +5,10 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 const GlobalStyle = createGlobalStyle`
-  body {
+  html, body, #root {
     margin: 0px;
     padding: 0px;
+    min-height: 100vh;
   }
 `
 

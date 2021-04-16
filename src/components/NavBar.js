@@ -38,10 +38,11 @@ const StyledNav = styled.nav`
   & ul {
     padding: 0px;
     display: flex;
-    flex-flow: row wrap;
+    flex-flow: row nowrap;
     & li {
       list-style-type: none;
-      padding: 3vw;
+      padding-left: 20px;
+      padding-right: 20px;
       & a, a:visited {
         color: #857e7a;
         text-decoration: none;
