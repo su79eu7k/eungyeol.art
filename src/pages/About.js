@@ -15,12 +15,27 @@ const StyledPhoto = styled.div`
     height:300px;
     object-fit:cover;
     border-radius:50%;
+    @media (max-width: 600px) {
+      width:200px;
+      height:200px;
+    }
+    margin-top: 2vh;
+    margin-bottom: 2vh;
   }
 `
 
 const StyledBio = styled.div`
   color: #443c36;
   font-family: 'Roboto', sans-serif;
+  text-align: justify;
+  max-width: 80%;
+  @media (min-width: 900px) {
+    max-width: 50%;
+    margin-left: 10vh;
+  }
+  @media (max-width: 600px) {
+    font-size: 0.9rem;
+  }
 `
 
 function About() {
@@ -28,12 +43,11 @@ function About() {
         <StyledAbout>
           <StyledPhoto><img src='/assets/portrait.jpg'></img></StyledPhoto>
           <StyledBio>
-            <h3>SeogGyeong; 석경</h3>
             <p>
               SeogGyeong(March 23, 1952 ~) is contemporary Korean painting artist. 
             </p>
             <p>
-              SeogGyeong was born in Andong, a small city placed in southern east area of South Korea, March 1952.
+              She was born in Andong, a small city placed in southern east area of South Korea, March 1952.
               She was raised in a devout Christian family.
               Since childhood, she was attracted by living in the nature, and she actually tried it when she was thirteen.
             </p>
@@ -45,7 +59,7 @@ function About() {
             <p>
               She is beloved wife, mother of two son and grandmother of four kids.
               She is painting through her whole life time.
-              And Still dreaming the life in nature with the believe in god's planning.
+              And Still dreaming the life in nature with the believe in god's plan.
             </p>
             <p>
               2021 is the year of her 70th birth anniversary.
