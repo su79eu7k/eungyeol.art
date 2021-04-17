@@ -45,6 +45,22 @@ const StyledNav = styled.nav`
       & a:hover {
         text-decoration: underline;
       }
+      & button {
+        margin: 0px;
+        padding: 0px;
+        border-width: 0px;
+        background-color: transparent;
+        font-family: inherit;
+        font-size: inherit;
+        color: #857e7a;
+        &:hover {
+          cursor: pointer;
+          text-decoration: underline;
+        }
+        &:focus {
+          outline: none;
+        }
+      }
     }
   }
 `
@@ -70,8 +86,8 @@ function NavBar (props) {
           <li><NavLink to='/'>Home</NavLink></li>
           <li><NavLink to='/arts'>Gallery</NavLink></li>
           <li><NavLink to='/about'>About</NavLink></li>
-          <li><NavLink to='/contact'>Contact</NavLink></li>
-          <li><button onClick={handleLang}>Language</button></li>
+          {/* <li><NavLink to='/contact'>Contact</NavLink></li> */}
+          <li><button onClick={handleLang}>{props.lang === 'English' ? 'EN' : 'KR'}</button></li>
         </ul>
       </StyledNav>
     </StyledHeader>

@@ -19,7 +19,7 @@ const StyledPhoto = styled.div`
     object-fit: cover;
     border-radius: 50%;
     @media (max-width: 900px) {
-      width:200px;
+      width: 200px;
       height: 200px;
     }
   }
@@ -30,11 +30,12 @@ const StyledBio = styled.div`
   font-family: 'Cafe24Oneprettynight';
   font-size: 1.2rem;
   text-align: justify;
-  max-width: 500px;
+  max-width: 600px;
+  min-height: 400px;
   margin-top: 1vh;
   @media (max-width: 600px) {
     max-width: 300px;
-    font-size: 0.9rem;
+    font-size: 1rem;
   }
 `
 
@@ -53,7 +54,7 @@ function About(props) {
           석경은 한국의 화가이다. 
         </p>
         <p>
-          1952년 3월 23일 대한민국 경상북도 안동에서 출생하였으며 독실한 기독교 가정에서 양육되었다.
+          1952년 3월 23일 대한민국 경상북도 안동에서 출생하였으며 독실한 기독교 가정에서 자랐다.
           어린 시절부터 자연 속 삶에 매료되어 13세 때에는 실제로 이를 직접 실행에 옮기기도 하였다.
         </p>
         <p>
@@ -63,8 +64,8 @@ function About(props) {
         </p>
         <p>
           그녀는 그녀의 전 생애에 걸쳐 그림을 그렸다.
-          현재 사랑받는 아내이며, 두 아들이 어머니이자 네 아이들의 할머니이기도 하다.
-          그리고 아직 하나님의 사랑과 계획하심 안에 시골 어딘가에서 자유로운 삶을 살게되길 꿈꾸고 있다.
+          현재 사랑받는 아내이며, 두 아들의 어머니이자 네 아이들의 할머니이기도 하다.
+          그리고 아직도 하나님의 사랑과 계획하심 안에 시골 어딘가에서 자유로운 삶을 살게되길 꿈꾸고 있다.
         </p>
         <p>
           2021년은 그녀의 탄생 70주년이 되는 해이다.
@@ -76,10 +77,10 @@ function About(props) {
       <Fade right cascade>
         <div>
         <p>
-          SeokGyeong(March 23, 1952 ~) is contemporary Korean painting artist. 
+          SeokGyeong is contemporary Korean painting artist. 
         </p>
         <p>
-          She was born in Andong, a small city placed in southern east area of South Korea, March 1952.
+          She was born in Andong, a small city placed in southern east area of South Korea, March 23, 1952.
           She was raised in devout Christian family.
           Since childhood, she was attracted by living in nature, and she actually tried it when she was thirteen.
         </p>
@@ -89,9 +90,9 @@ function About(props) {
           At that time she had many opportunities to travel various European countries and there she influenced by paintings, arts and culture there.
         </p>
         <p>
-          She is beloved wife, mother of two son and grandmother of four kids.
           She is painting through her whole life time.
-          And Still dreaming the life in nature with the believe in the love of god.
+          Now she is beloved wife, mother of two son and grandmother of four kids.
+          And Still dreaming the life somewhere in countryside with the believe in the love of god and his plan.
         </p>
         <p>
           2021 is the year of her 70th birth anniversary.
