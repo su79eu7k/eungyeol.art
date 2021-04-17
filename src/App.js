@@ -13,8 +13,8 @@ const StyledContainer = styled.div`
   align-items: stretch;
   min-height: inherit;
   & main {
-    padding-top: 5vh;
-    padding-bottom: 5vh;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
   }
 `
 

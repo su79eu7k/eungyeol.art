@@ -27,7 +27,7 @@ const StyledPhoto = styled.div`
 `
 
 const StyledBio = styled.div`
-  color: #443c36;
+  color: #857e7a;
   font-family: 'Roboto', sans-serif;
   text-align: justify;
   max-width: 80%;

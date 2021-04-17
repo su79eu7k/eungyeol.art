@@ -11,6 +11,7 @@ const StyledHeader = styled.header`
 `
 
 const StyledLogo = styled.div`
+  margin-top: 3vh;
   color: #443c36;
   font-family: 'Beth Ellen', cursive;
   font-size: 5vh;
@@ -61,7 +62,7 @@ function NavBar () {
         SeokGyeong.art
       </StyledLogo>
       <StyledLogoSub>
-        석경 한국화
+        석경 이미선 아트 갤러리
       </StyledLogoSub>
       <StyledNav>
         <ul>
