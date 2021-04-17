@@ -28,6 +28,7 @@ const StyledBio = styled.div`
   font-family: 'Roboto', sans-serif;
   text-align: justify;
   max-width: 500px;
+  margin-top: 1vh;
   @media (max-width: 600px) {
     max-width: 300px;
     font-size: 0.9rem;
@@ -39,7 +40,7 @@ function Landing() {
     <StyledAbout>
       <StyledPhoto>
       <Fade left>
-        <img src='/assets/landing.jpg' alt='Pastorale'></img>
+        <img src='/assets/landing_0.jpg' alt='Pastorale'></img>
       </Fade>
       </StyledPhoto>
       <StyledBio>

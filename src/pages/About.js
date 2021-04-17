@@ -12,17 +12,16 @@ const StyledAbout = styled.div`
 `
 
 const StyledPhoto = styled.div`
+  margin: 0vh 10vh 0vh 10vh;
   & img {
-    width:300px;
-    height:300px;
-    object-fit:cover;
-    border-radius:50%;
-    @media (max-width: 600px) {
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 50%;
+    @media (max-width: 900px) {
       width:200px;
-      height:200px;
+      height: 200px;
     }
-    margin-top: 2vh;
-    margin-bottom: 2vh;
   }
 `
 
@@ -30,12 +29,10 @@ const StyledBio = styled.div`
   color: #857e7a;
   font-family: 'Roboto', sans-serif;
   text-align: justify;
-  max-width: 80%;
-  @media (min-width: 900px) {
-    max-width: 50%;
-    margin-left: 10vh;
-  }
+  max-width: 500px;
+  margin-top: 1vh;
   @media (max-width: 600px) {
+    max-width: 300px;
     font-size: 0.9rem;
   }
 `
