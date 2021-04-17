@@ -1,3 +1,4 @@
+import React, { useState } from 'react'
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom'
 import styled from 'styled-components'
 import NavBar from './components/NavBar'
@@ -19,21 +20,23 @@ const StyledContainer = styled.div`
 `
 
 function App() {
+  const [lang, setLang] = useState('English')
+
   return (
     <BrowserRouter>
     <StyledContainer>
-      <NavBar />
+      <NavBar lang={lang} setLang={setLang} />
       <main>
         <Switch>
           <Redirect from='/' to='/home' exact />
           <Route path='/home'>
-            <Landing />
+            <Landing lang={lang} setLang={setLang} />
           </Route>
           <Route path='/arts'>
             <Arts />
           </Route>
           <Route path='/about'>
-            <About />
+            <About lang={lang} setLang={setLang} />
           </Route>
         </Switch>
       </main>

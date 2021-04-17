@@ -5,6 +5,19 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 const GlobalStyle = createGlobalStyle`
+  @font-face {
+      font-family: 'WandohopeB';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/WandohopeB.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+  }
+  @font-face {
+      font-family: 'Cafe24Oneprettynight';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.1/Cafe24Oneprettynight.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+  }
+
   html, body, #root {
     margin: 0px;
     padding: 0px;

@@ -27,7 +27,8 @@ const StyledPhoto = styled.div`
 
 const StyledBio = styled.div`
   color: #857e7a;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Cafe24Oneprettynight';
+  font-size: 1.2rem;
   text-align: justify;
   max-width: 500px;
   margin-top: 1vh;
@@ -37,7 +38,7 @@ const StyledBio = styled.div`
   }
 `
 
-function About() {
+function About(props) {
   return (
     <StyledAbout>
       <StyledPhoto>
@@ -45,7 +46,33 @@ function About() {
         <img src='/assets/portrait.jpg' alt='Portrait of SeokGyeong'></img>
         </Fade>
         </StyledPhoto>
-      <StyledBio>
+      { props.lang === 'English' && <StyledBio>
+      <Fade right cascade>
+        <div>
+        <p>
+          석경은 한국의 화가이다. 
+        </p>
+        <p>
+          1952년 3월 23일 대한민국 경상북도 안동에서 출생하였으며 독실한 기독교 가정에서 양육되었다.
+          어린 시절부터 자연 속 삶에 매료되어 13세 때에는 실제로 이를 직접 실행에 옮기기도 하였다.
+        </p>
+        <p>
+          경북대학교 사범대학을 졸업하여 화학 교사를 역임하였다.
+          이후 해외 주재원 생활을 하게 된 현재의 배우자와 결혼하여, 그를 따라 프랑스 벨포로 이주 후 그 곳에서 수년간의 해외 생활을 하였다.
+          그 시절 그녀는 유럽의 많은 나라들을 여행할 다양한 기회를 갖게 되었으며, 그 곳의 다양한 회화, 예술, 문화들은 그녀의 작품세계에도 적지 않은 영향을 끼치게 되었다. 
+        </p>
+        <p>
+          그녀는 그녀의 전 생애에 걸쳐 그림을 그렸다.
+          현재 사랑받는 아내이며, 두 아들이 어머니이자 네 아이들의 할머니이기도 하다.
+          그리고 아직 하나님의 사랑과 계획하심 안에 시골 어딘가에서 자유로운 삶을 살게되길 꿈꾸고 있다.
+        </p>
+        <p>
+          2021년은 그녀의 탄생 70주년이 되는 해이다.
+        </p>
+        </div>
+      </Fade>
+      </StyledBio> }
+      { props.lang === 'Korean' && <StyledBio>
       <Fade right cascade>
         <div>
         <p>
@@ -71,7 +98,7 @@ function About() {
         </p>
         </div>
       </Fade>
-      </StyledBio>
+      </StyledBio> }
     </StyledAbout>
   )
 }

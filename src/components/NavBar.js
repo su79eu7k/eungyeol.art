@@ -21,12 +21,6 @@ const StyledLogo = styled.div`
 `
 
 const StyledLogoSub = styled.div`
-  @font-face {
-      font-family: 'WandohopeB';
-      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/WandohopeB.woff') format('woff');
-      font-weight: normal;
-      font-style: normal;
-  }
   color: #443c36;
   font-family: 'WandohopeB';
   font-size: 4vh;
@@ -55,7 +49,14 @@ const StyledNav = styled.nav`
   }
 `
 
-function NavBar () {
+function NavBar (props) {
+  const handleLang = () => {
+    if (props.lang === 'English') {
+      props.setLang('Korean')
+    } else {
+      props.setLang('English')
+    }
+  }
   return (
     <StyledHeader>
       <StyledLogo>
@@ -70,6 +71,7 @@ function NavBar () {
           <li><NavLink to='/arts'>Gallery</NavLink></li>
           <li><NavLink to='/about'>About</NavLink></li>
           <li><NavLink to='/contact'>Contact</NavLink></li>
+          <li><button onClick={handleLang}>Language</button></li>
         </ul>
       </StyledNav>
     </StyledHeader>
