@@ -5,6 +5,7 @@ import NavBar from './components/NavBar'
 import Footer from './components/Footer'
 import About from './pages/About'
 import Arts from './pages/Arts'
+import Home from './pages/Home'
 import Landing from './pages/Landing'
 
 const StyledContainer = styled.div`
@@ -24,13 +25,14 @@ function App() {
 
   return (
     <BrowserRouter>
+    <Landing lang={lang} setLang={setLang} />
     <StyledContainer>
       <NavBar lang={lang} setLang={setLang} />
       <main>
         <Switch>
           <Redirect from='/' to='/home' exact />
           <Route path='/home'>
-            <Landing lang={lang} setLang={setLang} />
+            <Home lang={lang} setLang={setLang} />
           </Route>
           <Route path='/arts'>
             <Arts />

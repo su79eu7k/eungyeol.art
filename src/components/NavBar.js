@@ -87,7 +87,7 @@ function NavBar (props) {
           <li><NavLink to='/arts'>Gallery</NavLink></li>
           <li><NavLink to='/about'>About</NavLink></li>
           {/* <li><NavLink to='/contact'>Contact</NavLink></li> */}
-          <li><button onClick={handleLang}>{props.lang === 'English' ? 'EN' : 'KR'}</button></li>
+          <li><button onClick={handleLang}>{props.lang === 'English' ? 'English' : 'Korean'}</button></li>
         </ul>
       </StyledNav>
     </StyledHeader>
