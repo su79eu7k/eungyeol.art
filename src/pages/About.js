@@ -47,7 +47,7 @@ function About(props) {
         <img src='/assets/portrait.jpg' alt='Portrait of EunGyeol'></img>
         </Fade>
         </StyledPhoto>
-      { props.lang === 'English' && <StyledBio>
+      { props.lang === 'Korean' && <StyledBio>
       <Fade right cascade>
         <div>
         <p>
@@ -73,7 +73,7 @@ function About(props) {
         </div>
       </Fade>
       </StyledBio> }
-      { props.lang === 'Korean' && <StyledBio>
+      { props.lang === 'English' && <StyledBio>
       <Fade right cascade>
         <div>
         <p>
