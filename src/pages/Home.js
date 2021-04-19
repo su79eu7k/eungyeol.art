@@ -26,7 +26,7 @@ const StyledPhoto = styled.div`
 const StyledBio = styled.div`
   color: #857e7a;
   font-family: 'Cafe24Oneprettynight';
-  font-size: ${props => props.lang === 'English' ? '1.1rem' : '1.2rem'};
+  font-size: ${props => props.lang === 'English' ? '1.1rem' : '1.3rem'};
   text-align: justify;
   max-width: 500px;
   margin-top: 1vh;
