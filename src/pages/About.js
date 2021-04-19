@@ -44,14 +44,14 @@ function About(props) {
     <StyledAbout>
       <StyledPhoto>
       <Fade left>
-        <img src='/assets/portrait.jpg' alt='Portrait of SeokGyeong'></img>
+        <img src='/assets/portrait.jpg' alt='Portrait of EunGyeol'></img>
         </Fade>
         </StyledPhoto>
       { props.lang === 'English' && <StyledBio>
       <Fade right cascade>
         <div>
         <p>
-          석경은 한국의 화가이다. 
+          은결은 한국의 화가이다. 
         </p>
         <p>
           1952년 3월 23일 대한민국 경상북도 안동에서 출생하였으며 독실한 기독교 가정에서 자랐다.
@@ -77,7 +77,7 @@ function About(props) {
       <Fade right cascade>
         <div>
         <p>
-          SeokGyeong is contemporary Korean painting artist. 
+          EunGyeol is contemporary Korean painting artist. 
         </p>
         <p>
           She was born in Andong, a small city placed in southern east area of South Korea, March 23, 1952.
