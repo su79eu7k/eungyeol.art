@@ -1,6 +1,7 @@
 import React from 'react'
 import styled, { keyframes, css } from 'styled-components'
 import Portal from './Portal'
+import { MdClose } from 'react-icons/md'
 
 const fadeIn = keyframes`
   0% {
@@ -34,6 +35,15 @@ const ModalWrapper = styled.div`
   transition: visibility 1s linear;
   ${(props) => props.visible && css`animation: ${fadeIn} 1s`};
   ${(props) => !props.visible && css`animation: ${fadeOut} 1s`};
+  display: flex;
+  flex-flow: column nowrap;
+  & button {
+    align-self: flex-end;
+    margin:0px;
+    padding:0px;
+    border-width: 0px;
+    background-color: transparent;
+  }
 `
 
 const ModalOverlay = styled.div`
@@ -52,10 +62,19 @@ const ModalOverlay = styled.div`
 `
 
 function Modal(props) {
+  const handleClose = () => {
+    props.setFocus(false)
+    props.allowScroll()
+  }
   return (
     <Portal container='modal-root'>
     <ModalOverlay visible={props.visible} />
     <ModalWrapper visible={props.visible}>
+      <button onClick={handleClose}><MdClose style={{
+        width: '40px', 
+        height: '40px', 
+        color: '#ffffff',
+      }}/></button>
       {props.children}
     </ModalWrapper>
     </Portal>

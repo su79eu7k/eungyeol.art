@@ -62,7 +62,7 @@ function Arts() {
       <Gallery photos={images} onClick={focusHandler} />
       }
       {focus &&
-        <Modal visible={focus} setVisible={setFocus} allowScroll={allowScroll}>
+        <Modal visible={focus} setFocus={setFocus} allowScroll={allowScroll}>
           <ImageGallery items={images} startIndex={focusIdx}></ImageGallery>
         </Modal>
       }
