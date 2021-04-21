@@ -7,7 +7,7 @@ import reportWebVitals from './reportWebVitals';
 const GlobalStyle = createGlobalStyle`
   @font-face {
       font-family: 'WandohopeR';
-      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/WandohopeR.woff') format('woff');
+      src: local('WandohopeR'), url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/WandohopeR.woff') format('woff');
       font-weight: normal;
       font-style: normal;
   }
