@@ -52,7 +52,7 @@ function Landing (props) {
     <StyledContainer>
       <section id='one'>
         <StyledBio>
-          <Fade In duration={3000} cascade>
+          <Fade In duration={2000} cascade>
             <div>
               <p>
                 "우리 오빠는 안동사범을 최우수 그룹으로 나온, 어머니께는 거의 우상.
@@ -65,7 +65,7 @@ function Landing (props) {
       </section>
       <section id='two'>
         <StyledBio>
-          <Fade In duration={3000} cascade>
+          <Fade In duration={2000} cascade>
             <div>
               <p>
                 "평소 진정한 시골을 그리던 나는, 부모님을 졸라서 오빠를 따라 그 분교로 전학을 갔어.
@@ -77,7 +77,7 @@ function Landing (props) {
       </section>
       <section id='three'>
         <StyledBio>
-          <Fade In duration={3000} cascade>
+          <Fade In duration={2000} cascade>
             <div>
               <p>
                 "난생 처음 버스를 타고 먼지 나는 길을 두어 시간 달려서 군위에서 내렸다.
@@ -89,7 +89,7 @@ function Landing (props) {
       </section>
       <section id='four'>
         <StyledBio>
-          <Fade In duration={3000} cascade>
+          <Fade In duration={2000} cascade>
             <div>
               <p>
                 "우리는 시골집 외양간 옆에 방을 얻어 기거했는데, 학교는 옛날 소설 상록수에 나오는 것 같은 초가지붕이었어. 그래도 모든게 좋더라.
