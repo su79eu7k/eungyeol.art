@@ -101,18 +101,18 @@ const ModalOverlay = styled.div`
   ${(props) => !props.visible && css`animation: ${fadeOut} 1s`};
 `
 
-function Modal(props) {
+function Modal (props) {
   const handleClose = () => {
     props.setFocus(false)
     props.allowScroll()
   }
   return (
     <Portal container='modal-root'>
-    <ModalOverlay visible={props.visible} />
-    <ModalWrapper visible={props.visible}>
-      <button id='close' onClick={handleClose}><MdClose /></button>
-      {props.children}
-    </ModalWrapper>
+      <ModalOverlay visible={props.visible} />
+      <ModalWrapper visible={props.visible}>
+        <button id='close' onClick={handleClose}><MdClose /></button>
+        {props.children}
+      </ModalWrapper>
     </Portal>
   )
 }
