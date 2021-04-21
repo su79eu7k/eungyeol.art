@@ -37,13 +37,53 @@ const ModalWrapper = styled.div`
   ${(props) => !props.visible && css`animation: ${fadeOut} 1s`};
   display: flex;
   flex-flow: column nowrap;
-  & button {
+  & button#close {
+    margin: 0px;
+    padding: 20px;
     align-self: flex-end;
-    margin:0px;
-    padding:0px;
-    border-width: 0px;
+    transform: scale(1.2); 
+    color: #fff;
+    transition: all .2s ease-out;
+    -webkit-appearance: none;
+    appearance: none;
     background-color: transparent;
+    border: 0;
+    cursor: pointer;
+    outline: none;
+    position: absolute;
+    z-index: 4;
+    filter: drop-shadow(0 2px 2px #1a1a1a);
+    &:hover {
+      cursor:pointer;
+      color: #337ab7;
+      transform: scale(1.3); 
+    }
+    & svg {
+      width: 36px;
+      height: 36px;
+    }
   }
+  @media (max-width: 768px) {
+    button#close {
+      padding: 15px;
+      &:hover {
+        color: #fff;
+        transform: scale(1.2); 
+      }
+      & svg {
+        width: 24px;
+        height: 24px;
+    }
+  }
+  @media (max-width: 480px) {
+    button#close {
+    padding: 10px;
+    & svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+}
 `
 
 const ModalOverlay = styled.div`
@@ -70,11 +110,7 @@ function Modal(props) {
     <Portal container='modal-root'>
     <ModalOverlay visible={props.visible} />
     <ModalWrapper visible={props.visible}>
-      <button onClick={handleClose}><MdClose style={{
-        width: '40px', 
-        height: '40px', 
-        color: '#ffffff',
-      }}/></button>
+      <button id='close' onClick={handleClose}><MdClose /></button>
       {props.children}
     </ModalWrapper>
     </Portal>

@@ -28,6 +28,13 @@ const GlobalStyle = createGlobalStyle`
     margin: 0px;
     padding: 0px;
     min-height: 100vh;
+
+    // /* Hide scrollbar for Chrome, Safari and Opera */
+    // ::-webkit-scrollbar {
+    //   display: none;
+    // }
+    // -ms-overflow-style: none;  /* IE and Edge */
+    // scrollbar-width: none;  /* Firefox */
   }
 `
 
