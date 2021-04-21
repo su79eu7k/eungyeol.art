@@ -81,6 +81,7 @@ const ModalWrapper = styled.div`
     & svg {
       width: 16px;
       height: 16px;
+      }
     }
   }
 }
