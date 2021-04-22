@@ -188,10 +188,6 @@ export const photos = [
     thumbnail: "../../assets/thumbnail/20191201_211812.jpg",
   },
   {
-    original: "../../assets/original/20191201_211812.jpg",
-    thumbnail: "../../assets/thumbnail/20191201_211812.jpg",
-  },
-  {
     original: "../../assets/original/20191201_220606.jpg",
     thumbnail: "../../assets/thumbnail/20191201_220606.jpg",
   },
