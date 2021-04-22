@@ -76,10 +76,10 @@ function NavBar (props) {
   return (
     <StyledHeader>
       <StyledLogo>
-        EunGyeol.art
+        EunGyeol
       </StyledLogo>
       <StyledLogoSub>
-        은결 이미선 아트 갤러리
+        은결 이미선 한국화 갤러리
       </StyledLogoSub>
       <StyledNav>
         <ul>
