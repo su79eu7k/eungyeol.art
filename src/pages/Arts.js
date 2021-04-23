@@ -5,10 +5,13 @@ import ImageGallery from "react-image-gallery"
 import { photos } from "../photos"
 import './Arts.css'
 
-function Arts() {
-  const [images, setImages] = useState(null)
+function Arts () {
+  const [images, setImages] = useState([])
   const [focus, setFocus] = useState(false)
   const [focusIdx, setFocusIdx] = useState(0)
+  const [intersection, setIntersection] = useState(null)
+  const [loadingIdx, setLoadingIdx] = useState(10)
+  const [isLoaded, setIsLoaded] = useState(false)
 
   const handleTouchMove = useCallback((e) => {
     e.preventDefault()
@@ -47,29 +50,49 @@ function Arts() {
   }
 
   useEffect(() => {
-    async function fetchData() {
+    async function fetchData () {
       const getImgs = async () => {
-        return await Promise.all(photos.map(async (elem) => {
+        return await Promise.all(photos.slice(loadingIdx - 10, loadingIdx).map(async (elem) => {
           const meta = await getMeta(elem['original'])
-          return { ...elem, ...meta } 
+          return { ...elem, ...meta }
         }))
       }
 
-      setImages(await getImgs())
+      const _images = await getImgs()
+      setImages(images => images.concat(_images))
     }
     fetchData()
-  }, [])
+    setIsLoaded(true)
+  }, [loadingIdx])
+
+  useEffect(() => {
+    const _onIntersect = ([entry]) => {
+      if (entry.isIntersecting) {
+        console.log('Touched!');
+        setIsLoaded(false)
+        setLoadingIdx(loadingIdx => loadingIdx + 10)
+      }
+    };
+
+    let observer;
+    if (intersection) {
+      observer = new IntersectionObserver(_onIntersect, { threshold: 1 });
+      observer.observe(intersection);
+    }
+
+    return () => observer && observer.disconnect();
+  }, [intersection]);
 
   return (
     <div id='arts'>
-      {images && 
-      <Gallery photos={images} onClick={focusHandler} />
-      }
+      {images &&
+        <Gallery photos={images} onClick={focusHandler} />}
+      {isLoaded && loadingIdx <= photos.length &&
+        <div ref={setIntersection}>Loading...</div>}
       {focus &&
         <Modal visible={focus} setFocus={setFocus} allowScroll={allowScroll}>
           <ImageGallery items={images} startIndex={focusIdx}></ImageGallery>
-        </Modal>
-      }
+        </Modal>}
     </div>
   )
 }
