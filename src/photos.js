@@ -201,6 +201,6 @@ export const photos = [
   },
   {
     original: "../../assets/optimized/20191120_000000.jpg",
-    thumbnail: "../../assets/thumbnail/20191120_000000.jpeg",
+    thumbnail: "../../assets/thumbnail/20191120_000000.jpg",
   },
 ];
