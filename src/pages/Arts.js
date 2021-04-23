@@ -38,7 +38,11 @@ function Arts() {
   const getMeta = async (url) => {
     const img = new Image()
     img.src = url
-    await img.decode()
+    try {
+      await img.decode()
+    } catch {
+      console.log(img.src)
+    }
     return { 'width': img.width, 'height': img.height, 'src': img.src }
   }
 
