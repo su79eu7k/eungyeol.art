@@ -60,9 +60,9 @@ function Arts () {
 
       const _images = await getImgs()
       setImages(images => images.concat(_images))
+      setIsLoaded(true)
     }
     fetchData()
-    setIsLoaded(true)
   }, [loadingIdx])
 
   useEffect(() => {
