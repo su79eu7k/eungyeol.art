@@ -4,6 +4,16 @@ import Gallery from "react-photo-gallery"
 import ImageGallery from "react-image-gallery"
 import { photos } from "../photos"
 import './Arts.css'
+import { Grid } from 'react-spinners-css';
+import styled from 'styled-components'
+
+const StyledContainer = styled.div`
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+`
+
 
 function Arts () {
   const [images, setImages] = useState([])
@@ -84,16 +94,17 @@ function Arts () {
   }, [intersection]);
 
   return (
-    <div id='arts'>
+    <StyledContainer>
       {images &&
         <Gallery photos={images} onClick={focusHandler} />}
       {isLoaded && loadingIdx <= photos.length &&
-        <div ref={setIntersection}>Loading...</div>}
+        <div ref={setIntersection}></div>}
+      {!isLoaded && <div style={{marginTop: '20vh', marginBottom: '20vh'}}><Grid color='#443c36' /></div>}
       {focus &&
         <Modal visible={focus} setFocus={setFocus} allowScroll={allowScroll}>
           <ImageGallery items={images} startIndex={focusIdx}></ImageGallery>
         </Modal>}
-    </div>
+    </StyledContainer>
   )
 }
 

@@ -19,7 +19,14 @@
   justify-content: center;
 }
 
-.image-gallery-content .image-gallery-slide .image-gallery-image {
-  max-height: calc(100vh - 180px);
-  max-width: 75%;
+.image-gallery-slide-wrapper .image-gallery-swipe .image-gallery-slides .image-gallery-slide .image-gallery-image {
+  min-height: 70vh;
+  max-height: 70vh;
+  object-fit: scale-down;
+}
+
+.image-gallery-thumbnails-wrapper .image-gallery-thumbnails .image-gallery-thumbnail .image-gallery-thumbnail-inner .image-gallery-thumbnail-image {
+  min-height: 20vh;
+  max-height: 20vh;
+  object-fit: scale-down;
 }
