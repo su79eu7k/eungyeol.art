@@ -3,9 +3,9 @@ import styled from 'styled-components'
 import Fade from 'react-reveal/Fade'
 
 const StyledContainer = styled.div`
-  background-color: #e2dfde;;
+  background-color: #e2dfde;
   section {
-    min-height: 100vh; 
+    height: 100vh; 
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
