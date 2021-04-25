@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled, { keyframes, css } from 'styled-components'
 import Portal from './Portal'
 import { MdClose } from 'react-icons/md'
@@ -107,6 +107,13 @@ function Modal (props) {
     props.setFocus(false)
     props.allowScroll()
   }
+  
+  useEffect(() => {
+    return () => {
+      handleClose()
+    }
+  })
+
   return (
     <Portal container='modal-root'>
       <ModalOverlay visible={props.visible} />
