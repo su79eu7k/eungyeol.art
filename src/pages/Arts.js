@@ -86,7 +86,7 @@ function Arts () {
 
     let observer;
     if (intersection) {
-      observer = new IntersectionObserver(_onIntersect, { threshold: 1 });
+      observer = new IntersectionObserver(_onIntersect, { threshold: .1 });
       observer.observe(intersection);
     }
 
