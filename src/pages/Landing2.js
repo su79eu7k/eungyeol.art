@@ -2,14 +2,43 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
 const StyledContainer = styled.div`
-  height: 100vh;
-  background-image: url('../../assets/landing_0.jpg');
-  background-size: cover;
-  transform: translateY(${(props) => -props.offset/50}%);
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
+  position: relative;
+  height: 80vh;
+  overflow: hidden;
+
+  #far {
+    position: absolute;
+    z-index: -5000;
+    height: 100vh;
+    width: 100vw;
+    background-size: cover;
+    background-image: url('../../assets/landing_l0.png');  
+    transform: translateY(${(props) => props.offset/10}%);
+  }
+
+  #mid {
+    position: absolute;
+    z-index: -4000;
+    height: 100vh;
+    width: 100vw;
+    background-size: cover;
+    background-image: url('../../assets/landing_l1.png');
+    transform: translateY(${(props) => props.offset/30}%);
+  }
+
+  #front {
+    position: absolute;
+    z-index: -3000;
+    height: 100vh;
+    width: 100vw;
+    background-size: cover;
+    background-image: url('../../assets/landing_l2.png');
+    transform: translateY(${(props) => -props.offset/50}%);
+  }
 `
 
 const StyledLogoWrapper = styled.div`
@@ -50,6 +79,9 @@ function Landing2 (props) {
 
   return (
     <StyledContainer offset={offset}>
+      <div id='far'></div>
+      <div id='mid'></div>
+      <div id='front'></div>
       <StyledLogoWrapper offset={offset}>
         <StyledLogo>EunGyeol</StyledLogo>
         <StyledLogoSub>은결 이미선 한국화 갤러리</StyledLogoSub>
