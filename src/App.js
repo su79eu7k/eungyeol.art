@@ -6,7 +6,7 @@ import Footer from './components/Footer'
 import About from './pages/About'
 import Arts from './pages/Arts'
 import Home from './pages/Home'
-import Landing from './pages/Landing'
+import Landing2 from './pages/Landing2'
 
 const StyledContainer = styled.div`
   display: flex;
@@ -25,7 +25,7 @@ function App() {
 
   return (
     <BrowserRouter>
-    <Landing lang={lang} setLang={setLang} />
+    <Landing2 lang={lang} setLang={setLang} />
     <StyledContainer>
       <NavBar lang={lang} setLang={setLang} />
       <main>
