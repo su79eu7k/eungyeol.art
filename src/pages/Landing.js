@@ -1,104 +1,208 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import Fade from 'react-reveal/Fade'
 
 const StyledContainer = styled.div`
-  background-color: #e2dfde;
-  section {
-    height: 100vh; 
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    &#one {
-      background-image: url('../../assets/landing_0.jpg');
-    }
-    &#two {
-      background-image: url('../../assets/landing_1.jpg');
-    }
-    &#three {
-      background-image: url('../../assets/landing_2.jpg');
-    }
-    &#four {
-      background-image: url('../../assets/landing_3.jpg');
-    }
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
-  }
-`
+  height: 100vh;
+  width: 100%;
+	position: relative;
+	overflow: hidden;
+  background-image: url('../../assets/landing_0.jpg');  
+  background-size: cover;
 
-const StyledBio = styled.div`
-  padding: 5px 20px 5px 20px;
-  color: #443c36;
-  font-family: 'WandohopeR';
-  font-size: 1.5rem;
-  text-align: justify;
-  max-width: 70%;
+  .bird {
+    background-image: url('../../assets/bird-cells-new.svg');
+    background-size: auto 100%;
+    width: 88px;
+    height: 125px;
+    will-change: background-position;
+    
+    animation-name: fly-cycle;
+    animation-timing-function: steps(10);
+    animation-iteration-count: infinite;
+  
+    &--one {
+      animation-duration: 1s;
+      animation-delay: -0.5s;		
+    }
+    
+    &--two {
+      animation-duration: 0.9s;
+      animation-delay: -0.75s;
+    }
+    
+    &--three {
+      animation-duration: 1.25s;
+      animation-delay: -0.25s;
+    }
+    
+    &--four {
+      animation-duration: 1.1s;
+      animation-delay: -0.5s;
+    }
+  
+  }
+  
+  .bird-container {
+    position: absolute;
+    top: 20%;
+    left: -10%;
+    transform: scale(1.5) translateX(-10vw);
+    will-change: transform;
+
+    @media (max-width: 600px) {
+      left: -20%;
+    }
+    
+    animation-name: fly-right-one;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    
+    &--one {
+      animation-duration: 15s;
+      animation-delay: 0;
+    }
+    
+    &--two {
+      animation-duration: 16s;
+      animation-delay: 1s;
+    }
+    
+    &--three {
+      animation-duration: 14.6s;
+      animation-delay: 9.5s;
+    }
+    
+    &--four {
+      animation-duration: 16s;
+      animation-delay: 10.25s;
+    }
+    
+  }
+  
+  @keyframes fly-cycle {
+    100% {
+      background-position: -900px 0;
+    }
+  }
+  
+  @keyframes fly-right-one {
+    0% {
+      transform: scale(0.6) translateX(-10vw);
+    }
+    10% {
+      transform: translateY(2vh) translateX(10vw) scale(0.6);
+    }
+    20% {
+      transform: translateY(0vh) translateX(30vw) scale(0.6);
+    }
+    30% {
+      transform: translateY(4vh) translateX(50vw) scale(0.6);
+    }
+    40% {
+      transform: translateY(2vh) translateX(70vw) scale(0.5);
+    }
+    50% {
+      transform: translateY(0vh) translateX(90vw) scale(0.5);
+    }
+    60% {
+      transform: translateY(0vh) translateX(110vw) scale(0.4);
+    }
+    100% {
+      transform: translateY(0vh) translateX(110vw) scale(0.4);
+    }
+  }
+
   @media (max-width: 600px) {
-    max-width: 300px;
-    font-size: 0.9rem;
-  }
-  & p {
-    padding: 30px;
-    background-color: rgba(255, 255, 255, 0.6); 
-    border-radius: 30px;
+    @keyframes fly-right-one {
+      0% {
+        transform: scale(0.3) translateX(-10vw);
+      }
+      10% {
+        transform: translateY(2vh) translateX(10vw) scale(0.3);
+      }
+      20% {
+        transform: translateY(0vh) translateX(30vw) scale(0.3);
+      }
+      30% {
+        transform: translateY(4vh) translateX(50vw) scale(0.3);
+      }
+      40% {
+        transform: translateY(2vh) translateX(70vw) scale(0.2);
+      }
+      50% {
+        transform: translateY(0vh) translateX(90vw) scale(0.2);
+      }
+      60% {
+        transform: translateY(0vh) translateX(110vw) scale(0.1);
+      }
+      100% {
+        transform: translateY(0vh) translateX(110vw) scale(0.1);
+      }
+    }
   }
 `
 
-function Landing (props) {
+const StyledLogoWrapper = styled.div`
+  transform: translateY(${(props) => -props.offset/5}%);
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+`
+
+const StyledLogo = styled.div`
+  margin-top: 3vh;
+  color: #443c36;
+  font-family: 'Beth Ellen', cursive;
+  font-size: 5vh;
+  @media (max-width: 600px) {
+    font-size: 4vh;
+  }
+`
+
+const StyledLogoSub = styled.div`
+  color: #443c36;
+  font-family: 'WandohopeB';
+  font-size: 4vh;
+  @media (max-width: 600px) {
+    font-size: 3vh;
+  }
+`
+
+function Landing(props) {
+  const [offset, setOffset] = useState(0);
+
+  useEffect(() => {
+    window.onscroll = () => {
+      setOffset(window.pageYOffset)
+    }
+  }, []);
+
   return (
-    <StyledContainer>
-      <section id='one'>
-        <StyledBio>
-          <Fade In duration={2000} cascade>
-            <div>
-              <p>
-                "우리 오빠는 안동사범을 최우수 그룹으로 나온, 어머니께는 거의 우상.
-                아들로서는 완벽한 존재였던 것 같다. 물론 내게도 특별한 분이고.
-                제대 후에 시골에 발령을 받았는데, 내가 6학년 때였어."
-              </p>
-            </div>
-          </Fade>
-        </StyledBio>
-      </section>
-      <section id='two'>
-        <StyledBio>
-          <Fade In duration={2000} cascade>
-            <div>
-              <p>
-                "평소 진정한 시골을 그리던 나는, 부모님을 졸라서 오빠를 따라 그 분교로 전학을 갔어.
-                남들은 6학년이라고 중학교 입시준비 공부 한다고 야단인데."
-              </p>
-            </div>
-          </Fade>
-        </StyledBio>
-      </section>
-      <section id='three'>
-        <StyledBio>
-          <Fade In duration={2000} cascade>
-            <div>
-              <p>
-                "난생 처음 버스를 타고 먼지 나는 길을 두어 시간 달려서 군위에서 내렸다.
-                내를 건너고 산길을 걷고 걸어 진정한 시골 그곳에 도착했는데, 도중에 옹달샘에서 쉬고 물도 마셨지. 정말 좋았어."
-              </p>
-            </div>
-          </Fade>
-        </StyledBio>
-      </section>
-      <section id='four'>
-        <StyledBio>
-          <Fade In duration={2000} cascade>
-            <div>
-              <p>
-                "우리는 시골집 외양간 옆에 방을 얻어 기거했는데, 학교는 옛날 소설 상록수에 나오는 것 같은 초가지붕이었어. 그래도 모든게 좋더라.
-                거기서 아이들을 따라 나물도 캐고, 머슴애들은 언덕에서 소도 먹이고, 장 날 되면 엄청 멀리까지 걸어가서 시골 장 구경도 하고, 징검다리 건너 학교다니고, 점심 때는 밭에서 나는 상추도 뜯어서 쌈 싸먹고..."
-              </p>
-            </div>
-          </Fade>
-        </StyledBio>
-      </section>
+    <StyledContainer offset={offset}>
+      <div className="bird-container bird-container--one">
+        <div className="bird bird--one"></div>
+      </div>
+      <div className="bird-container bird-container--two">
+        <div className="bird bird--two"></div>
+      </div>
+      <div className="bird-container bird-container--three">
+        <div className="bird bird--three"></div>
+      </div>
+      <div className="bird-container bird-container--four">
+        <div className="bird bird--four"></div>
+      </div>
+      <StyledLogoWrapper offset={offset}>
+        <Fade In duration={5000} cascade>
+        <StyledLogo>EunGyeol</StyledLogo>
+        <StyledLogoSub>은결 이미선 한국화 갤러리</StyledLogoSub>
+        </Fade>
+      </StyledLogoWrapper>
     </StyledContainer>
   )
 }
