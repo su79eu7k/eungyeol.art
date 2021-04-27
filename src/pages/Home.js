@@ -21,7 +21,7 @@ margin: 5vh;
 `
 
 const StyledPhoto = styled.div`
-  margin: 0vh 5vh 0vh 5vh;
+  padding: 2vh;
   & img {
     width: 500px;
     object-fit: scale-down;
@@ -37,8 +37,10 @@ const StyledBio = styled.div`
   font-family: 'Cafe24Oneprettynight';
   font-size: ${props => props.lang === 'English' ? '1.3rem' : '1.3rem'};
   text-align: justify;
+  line-height: 2rem;
   max-width: 500px;
   margin-top: 1vh;
+  padding: 2vh;
   @media (max-width: 600px) {
     max-width: 300px;
     font-size: 0.9rem;

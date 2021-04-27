@@ -21,7 +21,7 @@ const StyledContainer = styled.div`
 `
 
 function App() {
-  const [lang, setLang] = useState('English')
+  const [lang, setLang] = useState('Korean')
 
   return (
     <BrowserRouter>
