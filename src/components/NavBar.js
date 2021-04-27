@@ -1,6 +1,7 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import styled from 'styled-components'
+import Fade from 'react-reveal/Fade'
 
 const StyledHeader = styled.header`
   display: flex;
@@ -75,12 +76,14 @@ function NavBar (props) {
   }
   return (
     <StyledHeader>
+      <Fade>
       <StyledLogo>
         EunGyeol
       </StyledLogo>
       <StyledLogoSub>
         은결 이미선 한국화 갤러리
       </StyledLogoSub>
+      </Fade>
       <StyledNav>
         <ul>
           <li><NavLink to='/'>Home</NavLink></li>
