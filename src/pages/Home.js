@@ -70,7 +70,7 @@ function Home(props) {
         </StyledBio>}
         {matched && <StyledPhoto>
           <Fade right>
-            <img src='/assets/landing_0.jpg' alt='Pastorale'></img>
+            <img src='/assets/landing_0.jpg' alt='Pastorale_0'></img>
           </Fade>
         </StyledPhoto>}
       </StyledSection>
@@ -78,7 +78,7 @@ function Home(props) {
       <StyledSection>
         <StyledPhoto>
           <Fade left>
-            <img src='/assets/landing_1.jpg' alt='Pastorale'></img>
+            <img src='/assets/landing_1.jpg' alt='Pastorale_1'></img>
           </Fade>
         </StyledPhoto>
         {props.lang === 'English' && <StyledBio lang='English'>
@@ -96,7 +96,7 @@ function Home(props) {
       <StyledSection>
         {!matched && <StyledPhoto>
           <Fade left>
-            <img src='/assets/landing_2.jpg' alt='Pastorale'></img>
+            <img src='/assets/landing_2.jpg' alt='Pastorale_2'></img>
           </Fade>
         </StyledPhoto>}
         {props.lang === 'English' && <StyledBio lang='English'>
@@ -111,7 +111,7 @@ function Home(props) {
         </StyledBio>}
         {matched && <StyledPhoto>
           <Fade right>
-            <img src='/assets/landing_2.jpg' alt='Pastorale'></img>
+            <img src='/assets/landing_2.jpg' alt='Pastorale_3'></img>
           </Fade>
         </StyledPhoto>}
       </StyledSection>
