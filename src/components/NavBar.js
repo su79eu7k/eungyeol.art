@@ -1,99 +1,213 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import styled from 'styled-components'
-import Fade from 'react-reveal/Fade'
+import { theme, media } from '../styles/theme'
 
-const StyledHeader = styled.header`
+const Header = styled.header`
+  position: sticky;
+  top: 0;
+  z-index: 100;
   display: flex;
-  flex-flow: column nowrap;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  font-family: 'Roboto', sans-serif;
-`
+  padding: ${theme.spacing.xl} ${theme.spacing['2xl']};
+  background-color: ${props =>
+    props.scrolled
+      ? 'rgba(250, 248, 245, 0.95)'
+      : theme.colors.background};
+  backdrop-filter: ${props => props.scrolled ? 'blur(10px)' : 'none'};
+  transition: all ${theme.transitions.normal};
+  border-bottom: 1px solid ${props =>
+    props.scrolled
+      ? theme.colors.goldSubtle
+      : 'transparent'};
 
-const StyledLogo = styled.div`
-  margin-top: 3vh;
-  color: #443c36;
-  font-family: 'Beth Ellen', cursive;
-  font-size: 5vh;
-  @media (max-width: 600px) {
-    font-size: 4vh;
+  ${media.md} {
+    padding: ${theme.spacing.lg} ${theme.spacing.xl};
   }
 `
 
-const StyledLogoSub = styled.div`
-  color: #443c36;
-  font-family: 'WandohopeB';
-  font-size: 4vh;
-  @media (max-width: 600px) {
-    font-size: 3vh;
+const Logo = styled(NavLink)`
+  font-family: ${theme.fonts.display};
+  font-size: ${theme.fontSizes['3xl']};
+  font-weight: ${theme.fontWeights.light};
+  color: ${theme.colors.textPrimary};
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  transition: color ${theme.transitions.fast};
+
+  &:hover {
+    color: ${theme.colors.gold};
+  }
+
+  ${media.md} {
+    font-size: ${theme.fontSizes['2xl']};
   }
 `
 
-const StyledNav = styled.nav`
-  & ul {
-    padding: 0px;
-    display: flex;
-    flex-flow: row nowrap;
-    & li {
-      list-style-type: none;
-      padding-left: 20px;
-      padding-right: 20px;
-      & a, a:visited {
-        color: #857e7a;
-        text-decoration: none;
-      }
-      & a:hover {
-        text-decoration: underline;
-      }
-      & button {
-        margin: 0px;
-        padding: 0px;
-        border-width: 0px;
-        background-color: transparent;
-        font-family: inherit;
-        font-size: inherit;
-        color: #857e7a;
-        &:hover {
-          cursor: pointer;
-          text-decoration: underline;
-        }
-        &:focus {
-          outline: none;
-        }
-      }
+const SubLogo = styled.span`
+  display: block;
+  font-family: ${theme.fonts.display};
+  font-size: ${theme.fontSizes.lg};
+  font-weight: ${theme.fontWeights.light};
+  color: ${theme.colors.textMuted};
+  letter-spacing: 0.05em;
+  text-align: center;
+  margin-top: ${theme.spacing.xs};
+
+  ${media.md} {
+    font-size: ${theme.fontSizes.base};
+  }
+`
+
+const Nav = styled.nav`
+  margin-top: ${theme.spacing.lg};
+
+  ${media.md} {
+    margin-top: ${theme.spacing.md};
+  }
+`
+
+const NavList = styled.ul`
+  display: flex;
+  align-items: center;
+  gap: ${theme.spacing.xl};
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  ${media.sm} {
+    gap: ${theme.spacing.lg};
+  }
+`
+
+const NavItem = styled.li``
+
+const StyledNavLink = styled(NavLink)`
+  position: relative;
+  font-family: ${theme.fonts.body};
+  font-size: ${theme.fontSizes.sm};
+  font-weight: ${theme.fontWeights.normal};
+  color: ${theme.colors.textSecondary};
+  text-decoration: none;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: ${theme.spacing.sm} 0;
+  transition: color ${theme.transitions.fast};
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background-color: ${theme.colors.gold};
+    transition: width ${theme.transitions.normal};
+  }
+
+  &:hover {
+    color: ${theme.colors.textPrimary};
+
+    &::after {
+      width: 100%;
     }
   }
+
+  &.active {
+    color: ${theme.colors.gold};
+
+    &::after {
+      width: 100%;
+    }
+  }
+
+  ${media.sm} {
+    font-size: ${theme.fontSizes.xs};
+    letter-spacing: 0.08em;
+  }
 `
 
-function NavBar (props) {
+const Divider = styled.span`
+  width: 1px;
+  height: 16px;
+  background-color: ${theme.colors.goldMuted};
+`
+
+const LangButton = styled.button`
+  font-family: ${theme.fonts.body};
+  font-size: ${theme.fontSizes.sm};
+  font-weight: ${theme.fontWeights.normal};
+  color: ${theme.colors.textMuted};
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: none;
+  border: none;
+  padding: ${theme.spacing.sm} 0;
+  cursor: pointer;
+  transition: color ${theme.transitions.fast};
+
+  &:hover {
+    color: ${theme.colors.gold};
+  }
+
+  &:focus-visible {
+    outline: 2px solid ${theme.colors.gold};
+    outline-offset: 4px;
+  }
+
+  ${media.sm} {
+    font-size: ${theme.fontSizes.xs};
+    letter-spacing: 0.08em;
+  }
+`
+
+function NavBar({ lang, setLang }) {
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50)
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
   const handleLang = () => {
-    if (props.lang === 'English') {
-      props.setLang('Korean')
-    } else {
-      props.setLang('English')
-    }
+    setLang(lang === 'English' ? 'Korean' : 'English')
   }
+
   return (
-    <StyledHeader>
-      <Fade>
-      <StyledLogo>
+    <Header scrolled={scrolled}>
+      <Logo to="/">
         EunGyeol
-      </StyledLogo>
-      <StyledLogoSub>
-        은결 이미선 한국화 갤러리
-      </StyledLogoSub>
-      </Fade>
-      <StyledNav>
-        <ul>
-          <li><NavLink to='/'>Home</NavLink></li>
-          <li><NavLink to='/arts'>Gallery</NavLink></li>
-          <li><NavLink to='/about'>About</NavLink></li>
-          {/* <li><NavLink to='/contact'>Contact</NavLink></li> */}
-          <li><button onClick={handleLang}>{props.lang === 'English' ? 'Korean' : 'English'}</button></li>
-        </ul>
-      </StyledNav>
-    </StyledHeader>
+        <SubLogo>은결 · 이미선</SubLogo>
+      </Logo>
+
+      <Nav aria-label="Main navigation">
+        <NavList>
+          <NavItem>
+            <StyledNavLink to="/home">Home</StyledNavLink>
+          </NavItem>
+          <NavItem>
+            <StyledNavLink to="/arts">Gallery</StyledNavLink>
+          </NavItem>
+          <NavItem>
+            <StyledNavLink to="/about">About</StyledNavLink>
+          </NavItem>
+          <Divider />
+          <NavItem>
+            <LangButton
+              onClick={handleLang}
+              aria-label={`Change language to ${lang === 'English' ? 'Korean' : 'English'}`}
+            >
+              {lang === 'English' ? 'KR' : 'EN'}
+            </LangButton>
+          </NavItem>
+        </NavList>
+      </Nav>
+    </Header>
   )
 }
 

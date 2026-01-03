@@ -1,209 +1,211 @@
 import React, { useState, useEffect } from 'react'
-import styled from 'styled-components'
-import Fade from 'react-reveal/Fade'
+import styled, { keyframes } from 'styled-components'
+import { theme, media } from '../styles/theme'
+import ArtDecoBackground from '../components/ArtDecoBackground'
 
-const StyledContainer = styled.div`
+// 부드러운 페이드 인 애니메이션
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`
+
+const fadeInDelayed = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`
+
+// 스크롤 인디케이터 바운스
+const bounce = keyframes`
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0) translateX(-50%);
+  }
+  40% {
+    transform: translateY(-8px) translateX(-50%);
+  }
+  60% {
+    transform: translateY(-4px) translateX(-50%);
+  }
+`
+
+const Container = styled.div`
+  position: relative;
   display: flex;
-  flex-flow: column nowrap;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
   width: 100%;
-	position: relative;
-	overflow: hidden;
-  background-image: url('../../assets/landing_0.jpg');  
-  background-size: cover;
-
-  .bird {
-    background-image: url('../../assets/bird-cells-new.svg');
-    background-size: auto 100%;
-    width: 88px;
-    height: 125px;
-    will-change: background-position;
-    
-    animation-name: fly-cycle;
-    animation-timing-function: steps(10);
-    animation-iteration-count: infinite;
-  
-    &--one {
-      animation-duration: 1s;
-      animation-delay: -0.5s;		
-    }
-    
-    &--two {
-      animation-duration: 0.9s;
-      animation-delay: -0.75s;
-    }
-    
-    &--three {
-      animation-duration: 1.25s;
-      animation-delay: -0.25s;
-    }
-    
-    &--four {
-      animation-duration: 1.1s;
-      animation-delay: -0.5s;
-    }
-  
-  }
-  
-  .bird-container {
-    position: absolute;
-    top: 20%;
-    left: -10%;
-    transform: scale(1.5) translateX(-10vw);
-    will-change: transform;
-
-    @media (max-width: 600px) {
-      left: -20%;
-    }
-    
-    animation-name: fly-right-one;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-    
-    &--one {
-      animation-duration: 15s;
-      animation-delay: 0;
-    }
-    
-    &--two {
-      animation-duration: 16s;
-      animation-delay: 1s;
-    }
-    
-    &--three {
-      animation-duration: 14.6s;
-      animation-delay: 9.5s;
-    }
-    
-    &--four {
-      animation-duration: 16s;
-      animation-delay: 10.25s;
-    }
-    
-  }
-  
-  @keyframes fly-cycle {
-    100% {
-      background-position: -900px 0;
-    }
-  }
-  
-  @keyframes fly-right-one {
-    0% {
-      transform: scale(0.6) translateX(-10vw);
-    }
-    10% {
-      transform: translateY(2vh) translateX(10vw) scale(0.6);
-    }
-    20% {
-      transform: translateY(0vh) translateX(30vw) scale(0.6);
-    }
-    30% {
-      transform: translateY(4vh) translateX(50vw) scale(0.6);
-    }
-    40% {
-      transform: translateY(2vh) translateX(70vw) scale(0.5);
-    }
-    50% {
-      transform: translateY(0vh) translateX(90vw) scale(0.5);
-    }
-    60% {
-      transform: translateY(0vh) translateX(110vw) scale(0.4);
-    }
-    100% {
-      transform: translateY(0vh) translateX(110vw) scale(0.4);
-    }
-  }
-
-  @media (max-width: 600px) {
-    @keyframes fly-right-one {
-      0% {
-        transform: scale(0.3) translateX(-10vw);
-      }
-      10% {
-        transform: translateY(2vh) translateX(10vw) scale(0.3);
-      }
-      20% {
-        transform: translateY(0vh) translateX(30vw) scale(0.3);
-      }
-      30% {
-        transform: translateY(4vh) translateX(50vw) scale(0.3);
-      }
-      40% {
-        transform: translateY(2vh) translateX(70vw) scale(0.2);
-      }
-      50% {
-        transform: translateY(0vh) translateX(90vw) scale(0.2);
-      }
-      60% {
-        transform: translateY(0vh) translateX(110vw) scale(0.1);
-      }
-      100% {
-        transform: translateY(0vh) translateX(110vw) scale(0.1);
-      }
-    }
-  }
+  background-color: ${theme.colors.background};
+  overflow: hidden;
 `
 
-const StyledLogoWrapper = styled.div`
-  transform: translateY(${(props) => -props.offset/5}%);
+const ContentWrapper = styled.div`
+  position: relative;
+  z-index: 1;
   display: flex;
-  flex-flow: column nowrap;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-`
+  text-align: center;
+  padding: ${theme.spacing['2xl']};
+  transform: translateY(${props => -props.offset * 0.3}px);
+  transition: transform 0.1s ease-out;
 
-const StyledLogo = styled.div`
-  margin-top: 3vh;
-  color: #443c36;
-  font-family: 'Beth Ellen', cursive;
-  font-size: 5vh;
-  @media (max-width: 600px) {
-    font-size: 4vh;
+  ${media.md} {
+    padding: ${theme.spacing.xl};
   }
 `
 
-const StyledLogoSub = styled.div`
-  color: #443c36;
-  font-family: 'WandohopeB';
-  font-size: 4vh;
-  @media (max-width: 600px) {
-    font-size: 3vh;
+const LogoWrapper = styled.div`
+  margin-bottom: ${theme.spacing.xl};
+`
+
+const Logo = styled.h1`
+  font-family: ${theme.fonts.display};
+  font-size: ${theme.fontSizes['6xl']};
+  font-weight: ${theme.fontWeights.light};
+  color: ${theme.colors.textPrimary};
+  letter-spacing: 0.15em;
+  margin: 0;
+  animation: ${fadeIn} 1.5s ease-out forwards;
+
+  ${media.md} {
+    font-size: ${theme.fontSizes['5xl']};
+  }
+
+  ${media.sm} {
+    font-size: ${theme.fontSizes['4xl']};
   }
 `
 
-function Landing(props) {
-  const [offset, setOffset] = useState(0);
+const SubLogo = styled.p`
+  font-family: ${theme.fonts.display};
+  font-size: ${theme.fontSizes['2xl']};
+  font-weight: ${theme.fontWeights.light};
+  color: ${theme.colors.textSecondary};
+  letter-spacing: 0.1em;
+  margin-top: ${theme.spacing.md};
+  opacity: 0;
+  animation: ${fadeInDelayed} 1.5s ease-out 0.5s forwards;
+
+  ${media.md} {
+    font-size: ${theme.fontSizes.xl};
+  }
+
+  ${media.sm} {
+    font-size: ${theme.fontSizes.lg};
+  }
+`
+
+const Divider = styled.div`
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    ${theme.colors.gold},
+    transparent
+  );
+  margin: ${theme.spacing.xl} 0;
+  opacity: 0;
+  animation: ${fadeInDelayed} 1.5s ease-out 0.8s forwards;
+`
+
+const Tagline = styled.p`
+  font-family: ${theme.fonts.body};
+  font-size: ${theme.fontSizes.base};
+  font-weight: ${theme.fontWeights.light};
+  color: ${theme.colors.textMuted};
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0;
+  animation: ${fadeInDelayed} 1.5s ease-out 1s forwards;
+
+  ${media.sm} {
+    font-size: ${theme.fontSizes.sm};
+    letter-spacing: 0.15em;
+  }
+`
+
+const ScrollIndicator = styled.div`
+  position: absolute;
+  bottom: ${theme.spacing['2xl']};
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0;
+  animation: ${fadeInDelayed} 1.5s ease-out 1.5s forwards;
+`
+
+const ScrollText = styled.span`
+  font-family: ${theme.fonts.body};
+  font-size: ${theme.fontSizes.xs};
+  color: ${theme.colors.textMuted};
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: ${theme.spacing.sm};
+`
+
+const ScrollArrow = styled.div`
+  width: 20px;
+  height: 20px;
+  border-right: 1px solid ${theme.colors.gold};
+  border-bottom: 1px solid ${theme.colors.gold};
+  transform: rotate(45deg);
+  animation: ${bounce} 2s ease-in-out infinite;
+  animation-delay: 2s;
+`
+
+function Landing() {
+  const [offset, setOffset] = useState(0)
 
   useEffect(() => {
-    window.onscroll = () => {
-      setOffset(window.pageYOffset)
+    const handleScroll = () => {
+      requestAnimationFrame(() => {
+        setOffset(window.pageYOffset)
+      })
     }
-  }, []);
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [])
 
   return (
-    <StyledContainer offset={offset}>
-      <div className="bird-container bird-container--one">
-        <div className="bird bird--one"></div>
-      </div>
-      <div className="bird-container bird-container--two">
-        <div className="bird bird--two"></div>
-      </div>
-      <div className="bird-container bird-container--three">
-        <div className="bird bird--three"></div>
-      </div>
-      <div className="bird-container bird-container--four">
-        <div className="bird bird--four"></div>
-      </div>
-      <StyledLogoWrapper offset={offset}>
-        <Fade In duration={5000} cascade>
-        <StyledLogo>EunGyeol</StyledLogo>
-        <StyledLogoSub>은결 이미선 한국화 갤러리</StyledLogoSub>
-        </Fade>
-      </StyledLogoWrapper>
-    </StyledContainer>
+    <Container>
+      <ArtDecoBackground />
+
+      <ContentWrapper offset={offset}>
+        <LogoWrapper>
+          <Logo>EunGyeol</Logo>
+          <SubLogo>은결 · 이미선</SubLogo>
+        </LogoWrapper>
+
+        <Divider />
+
+        <Tagline>Korean Traditional Art</Tagline>
+      </ContentWrapper>
+
+      <ScrollIndicator>
+        <ScrollText>Scroll</ScrollText>
+        <ScrollArrow />
+      </ScrollIndicator>
+    </Container>
   )
 }
 
