@@ -111,13 +111,13 @@ const bioData = {
     '은결(이미선)은 한국의 화가이다.',
     '1952년 경북 안동에서 태어나 기독교 집안에서 자랐다. 어린 시절부터 자연과 함께하는 삶을 동경했다.',
     '경북대학교 사범대학에서 화학을 전공했다. 결혼 후 남편의 해외 발령을 따라 프랑스 벨포에서 수년간 생활했다. 이 시기에 유럽 여러 나라를 여행하며 다양한 예술과 문화를 접했고, 이는 그녀의 작품에 영향을 주었다.',
-    '평생 그림을 그려왔다. 지금은 두 아들과 네 손주를 둔 할머니로, 여전히 자연 속에서의 소박한 삶을 꿈꾸고 있다.',
+    '평생 그림을 그려왔다. 지금은 두 아들과 다섯 손주를 둔 할머니로, 여전히 자연 속에서의 소박한 삶을 꿈꾸고 있다.',
   ],
   English: [
     'EunGyeol (Lee, Mi Sun) is a Korean painter.',
     'She was born in Andong, South Korea in 1952 and grew up in a Christian family. From an early age, she was drawn to life close to nature.',
     "She studied chemistry education at Kyungpook National University. After marriage, she lived in Belfort, France for several years, following her husband's overseas assignment. During this time, she traveled throughout Europe, where she encountered various art and cultures that influenced her work.",
-    'She has painted throughout her life. Now a grandmother of four, she still dreams of a simple life in the countryside.',
+    'She has painted throughout her life. Now a grandmother of five, she still dreams of a simple life in the countryside.',
   ],
 }
 
