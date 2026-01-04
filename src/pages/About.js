@@ -1,17 +1,9 @@
 import React from 'react'
-import styled, { keyframes } from 'styled-components'
+import styled from 'styled-components'
 import { theme, media } from '../styles/theme'
-
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-`
+import { fadeInUp } from '../styles/animations'
+import { Divider } from '../components/shared'
+import { usePageTitle } from '../hooks/usePageTitle'
 
 const Container = styled.div`
   display: flex;
@@ -20,6 +12,7 @@ const Container = styled.div`
   max-width: 1000px;
   margin: 0 auto;
   padding: ${theme.spacing['2xl']} 0;
+  animation: ${fadeInUp} 0.8s ease-out;
 `
 
 const ProfileSection = styled.section`
@@ -27,7 +20,6 @@ const ProfileSection = styled.section`
   flex-direction: column;
   align-items: center;
   margin-bottom: ${theme.spacing['3xl']};
-  animation: ${fadeIn} 1s ease-out;
 `
 
 const PortraitWrapper = styled.div`
@@ -83,22 +75,8 @@ const Title = styled.p`
   text-align: center;
 `
 
-const Divider = styled.div`
-  width: 60px;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    ${theme.colors.gold},
-    transparent
-  );
-  margin: ${theme.spacing['2xl']} 0;
-`
-
 const BioSection = styled.section`
   max-width: 700px;
-  opacity: 0;
-  animation: ${fadeIn} 1s ease-out 0.3s forwards;
 `
 
 const BioParagraph = styled.p`
@@ -146,6 +124,9 @@ function About({ lang }) {
   const currentYear = new Date().getFullYear()
   const birthYear = 1952
   const age = currentYear - birthYear
+  const pageTitle = lang === 'English' ? 'About' : '작가 소개'
+
+  usePageTitle(pageTitle, lang)
 
   return (
     <Container>

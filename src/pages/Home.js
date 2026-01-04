@@ -1,17 +1,9 @@
 import React from 'react'
-import styled, { keyframes } from 'styled-components'
+import styled from 'styled-components'
 import { theme, media } from '../styles/theme'
-
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-`
+import { fadeInUp } from '../styles/animations'
+import { PageTitle } from '../components/shared'
+import { usePageTitle } from '../hooks/usePageTitle'
 
 const Container = styled.div`
   display: flex;
@@ -19,22 +11,7 @@ const Container = styled.div`
   align-items: center;
   max-width: 1200px;
   margin: 0 auto;
-`
-
-const PageTitle = styled.h2`
-  font-family: ${theme.fonts.display};
-  font-size: ${theme.fontSizes['3xl']};
-  font-weight: ${theme.fontWeights.light};
-  color: ${theme.colors.textPrimary};
-  text-align: center;
-  letter-spacing: 0.1em;
-  margin-bottom: ${theme.spacing['3xl']};
-  animation: ${fadeIn} 1s ease-out;
-
-  ${media.md} {
-    font-size: ${theme.fontSizes['2xl']};
-    margin-bottom: ${theme.spacing['2xl']};
-  }
+  animation: ${fadeInUp} 0.8s ease-out;
 `
 
 const Section = styled.section`
@@ -44,7 +21,7 @@ const Section = styled.section`
   align-items: center;
   margin-bottom: ${theme.spacing['4xl']};
   opacity: 0;
-  animation: ${fadeIn} 1s ease-out forwards;
+  animation: ${fadeInUp} 1s ease-out forwards;
   animation-delay: ${props => props.delay || '0s'};
 
   &:nth-child(even) {
@@ -197,12 +174,13 @@ const stories = {
 
 function Home({ lang }) {
   const currentStories = stories[lang] || stories.Korean
+  const pageTitle = lang === 'English' ? 'My Story' : '나의 이야기'
+
+  usePageTitle(pageTitle, lang)
 
   return (
     <Container>
-      <PageTitle>
-        {lang === 'English' ? 'My Story' : '나의 이야기'}
-      </PageTitle>
+      <PageTitle>{pageTitle}</PageTitle>
 
       {currentStories.map((story, index) => (
         <Section key={index} delay={`${0.2 + index * 0.15}s`}>

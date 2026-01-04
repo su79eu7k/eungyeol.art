@@ -4,47 +4,17 @@ import Gallery from "react-photo-gallery"
 import ImageGallery from "react-image-gallery"
 import { photos } from "../photos"
 import './Arts.css'
-import styled, { keyframes } from 'styled-components'
-import { theme, media } from '../styles/theme'
-
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-`
-
-const spin = keyframes`
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-`
+import styled from 'styled-components'
+import { theme } from '../styles/theme'
+import { fadeIn, spin } from '../styles/animations'
+import { PageTitle } from '../components/shared'
+import { usePageTitle } from '../hooks/usePageTitle'
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   animation: ${fadeIn} 0.8s ease-out;
-`
-
-const PageTitle = styled.h2`
-  font-family: ${theme.fonts.display};
-  font-size: ${theme.fontSizes['3xl']};
-  font-weight: ${theme.fontWeights.light};
-  color: ${theme.colors.textPrimary};
-  text-align: center;
-  letter-spacing: 0.1em;
-  margin-bottom: ${theme.spacing['2xl']};
-
-  ${media.md} {
-    font-size: ${theme.fontSizes['2xl']};
-    margin-bottom: ${theme.spacing.xl};
-  }
 `
 
 const GalleryWrapper = styled.div`
@@ -103,6 +73,8 @@ function Arts() {
   const [intersection, setIntersection] = useState(null)
   const [loadingIdx, setLoadingIdx] = useState(10)
   const [isLoaded, setIsLoaded] = useState(false)
+
+  usePageTitle('Gallery')
 
   const handleTouchMove = useCallback((e) => {
     e.preventDefault()

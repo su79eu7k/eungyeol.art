@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { theme } from './styles/theme'
 import NavBar from './components/NavBar'
 import Footer from './components/Footer'
+import ScrollToTop from './components/ScrollToTop'
 import About from './pages/About'
 import Arts from './pages/Arts'
 import Home from './pages/Home'
@@ -33,6 +34,7 @@ function App() {
 
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Route exact path="/">
         <Landing />
       </Route>
