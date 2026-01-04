@@ -1,15 +1,11 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react'
 import styled, { keyframes } from 'styled-components'
 import { theme, media } from '../styles/theme'
+import { fadeInUp } from '../styles/animations'
 
 const shimmer = keyframes`
   0% { background-position: 100% 100%; }
   100% { background-position: 0% 0%; }
-`
-
-const fadeIn = keyframes`
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
 `
 
 const GalleryGrid = styled.div`
@@ -34,9 +30,11 @@ const ImageWrapper = styled.div`
   margin-bottom: ${theme.spacing.md};
   overflow: hidden;
   background-color: ${theme.colors.backgroundAlt};
+  border-radius: ${theme.radii.lg};
   cursor: pointer;
-  animation: ${fadeIn} 0.5s ease-out backwards;
+  animation: ${fadeInUp} 0.5s ease-out backwards;
   animation-delay: ${props => props.$delay}ms;
+  contain: layout style paint;
 
   ${media.lg} {
     margin-bottom: ${theme.spacing.sm};
@@ -53,11 +51,12 @@ const ImageWrapper = styled.div`
     left: 0;
     right: 0;
     bottom: 0;
+    border-radius: ${theme.radii.lg};
     background: linear-gradient(
       to bottom,
       transparent 0%,
       transparent 60%,
-      rgba(0, 0, 0, 0.1) 100%
+      rgba(0, 0, 0, 0.08) 100%
     );
     opacity: 0;
     transition: opacity ${theme.transitions.normal};
@@ -84,6 +83,7 @@ const AspectRatioContainer = styled.div`
   width: 100%;
   padding-top: ${props => props.$ratio ? `${props.$ratio * 100}%` : '75%'};
   background-color: ${theme.colors.backgroundAlt};
+  border-radius: ${theme.radii.lg};
 `
 
 const Placeholder = styled.div`
@@ -92,6 +92,7 @@ const Placeholder = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
+  border-radius: ${theme.radii.lg};
   background: linear-gradient(
     135deg,
     ${theme.colors.backgroundAlt} 0%,
@@ -101,7 +102,7 @@ const Placeholder = styled.div`
   background-size: 200% 200%;
   animation: ${shimmer} 1.5s ease-in-out infinite;
   opacity: ${props => (props.$loaded ? 0 : 1)};
-  transition: opacity 0.4s ease-out;
+  transition: opacity 0.3s ease-out;
   pointer-events: none;
   z-index: 1;
 `
@@ -113,10 +114,10 @@ const StyledImage = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform ${theme.transitions.normal}, opacity 0.4s ease-out;
+  border-radius: ${theme.radii.lg};
+  transition: transform 0.3s ease-out, opacity 0.3s ease-out;
   opacity: ${props => (props.$loaded ? 1 : 0)};
-  image-rendering: -webkit-optimize-contrast;
-  image-rendering: crisp-edges;
+  will-change: transform;
 `
 
 const GalleryItem = React.memo(({ photo, index, onClick }) => {
@@ -166,7 +167,12 @@ const GalleryItem = React.memo(({ photo, index, onClick }) => {
       tabIndex={0}
       role="button"
       aria-label={`View artwork ${index + 1}`}
-      onKeyDown={(e) => e.key === 'Enter' && handleClick()}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault()
+          handleClick()
+        }
+      }}
     >
       <AspectRatioContainer $ratio={aspectRatio}>
         <Placeholder $loaded={loaded} />

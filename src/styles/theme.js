@@ -27,6 +27,15 @@ export const theme = {
     white: '#FFFFFF',
     black: '#1A1816',
     overlay: 'rgba(45, 40, 35, 0.85)',  // 더 따뜻한 오버레이
+
+    // 오버레이/글래스모피즘 (ImageViewer 등)
+    overlayLight: 'rgba(0, 0, 0, 0.3)',
+    overlayMedium: 'rgba(0, 0, 0, 0.4)',
+    overlayDark: 'rgba(0, 0, 0, 0.5)',
+    glassBorder: 'rgba(255, 255, 255, 0.2)',
+    glassText: 'rgba(255, 255, 255, 0.7)',
+    glassTextMuted: 'rgba(255, 255, 255, 0.6)',
+    glassTextSubtle: 'rgba(255, 255, 255, 0.4)',
   },
 
   // 타이포그래피
@@ -112,9 +121,10 @@ export const theme = {
 
   // 둥근 모서리
   radii: {
-    sm: '2px',
-    md: '4px',
-    lg: '8px',
+    sm: '4px',
+    md: '8px',
+    lg: '12px',
+    xl: '16px',
     full: '9999px',
   },
 }

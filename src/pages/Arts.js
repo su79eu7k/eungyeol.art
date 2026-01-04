@@ -9,6 +9,12 @@ import { fadeIn, spin } from '../styles/animations'
 import { PageTitle } from '../components/shared'
 import { usePageTitle } from '../hooks/usePageTitle'
 
+// 이미지 메타데이터 캐시 (컴포넌트 외부에 선언하여 재마운트 시에도 유지)
+const imageMetaCache = new Map()
+
+// 기본 이미지 크기 (로드 실패 시 사용)
+const DEFAULT_IMAGE_SIZE = { width: 800, height: 600 }
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -101,16 +107,41 @@ function Arts() {
     setFocusIdx(index)
   }, [rejectScroll])
 
-  const getMeta = async (url) => {
+  const getMeta = useCallback(async (url) => {
+    // 캐시에서 먼저 확인
+    if (imageMetaCache.has(url)) {
+      return imageMetaCache.get(url)
+    }
+
     const img = new Image()
     img.src = url
+
     try {
       await img.decode()
-    } catch {
-      console.log('Image load error:', img.src)
+      const meta = {
+        width: img.width || DEFAULT_IMAGE_SIZE.width,
+        height: img.height || DEFAULT_IMAGE_SIZE.height,
+        src: img.src,
+        loaded: true
+      }
+      // 성공한 경우 캐시에 저장
+      imageMetaCache.set(url, meta)
+      return meta
+    } catch (error) {
+      console.warn('Image load error:', url, error)
+      // 실패 시 기본 크기 반환 (레이아웃 깨짐 방지)
+      const fallbackMeta = {
+        width: DEFAULT_IMAGE_SIZE.width,
+        height: DEFAULT_IMAGE_SIZE.height,
+        src: url,
+        loaded: false,
+        error: true
+      }
+      // 실패한 경우에도 캐시에 저장 (반복 요청 방지)
+      imageMetaCache.set(url, fallbackMeta)
+      return fallbackMeta
     }
-    return { 'width': img.width, 'height': img.height, 'src': img.src }
-  }
+  }, [])
 
   useEffect(() => {
     let cancelled = false
@@ -125,20 +156,29 @@ function Arts() {
 
       setIsLoading(true)
 
-      const getImgs = async () => {
-        return await Promise.all(
-          photos.slice(startIdx, endIdx).map(async (elem, idx) => {
+      // 이미지를 순차적으로 로드하여 네트워크 부하 분산 (5개씩 병렬)
+      const batchSize = 5
+      const photosToLoad = photos.slice(startIdx, endIdx)
+      const results = []
+
+      for (let i = 0; i < photosToLoad.length; i += batchSize) {
+        if (cancelled) break
+
+        const batch = photosToLoad.slice(i, i + batchSize)
+        const batchResults = await Promise.all(
+          batch.map(async (elem, batchIdx) => {
+            const globalIdx = startIdx + i + batchIdx
             const meta = await getMeta(elem['original'])
-            return { ...elem, ...meta, id: `photo-${startIdx + idx}` }
+            return { ...elem, ...meta, id: `photo-${globalIdx}` }
           })
         )
+        results.push(...batchResults)
       }
 
-      const _images = await getImgs()
       if (!cancelled) {
         setImages(prev => {
           const existingIds = new Set(prev.map(img => img.id))
-          const newImages = _images.filter(img => !existingIds.has(img.id))
+          const newImages = results.filter(img => !existingIds.has(img.id))
           return [...prev, ...newImages]
         })
         setIsLoading(false)
@@ -147,7 +187,7 @@ function Arts() {
     fetchData()
 
     return () => { cancelled = true }
-  }, [loadingIdx])
+  }, [loadingIdx, getMeta])
 
   useEffect(() => {
     const onIntersect = ([entry]) => {

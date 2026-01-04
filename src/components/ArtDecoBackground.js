@@ -2,8 +2,8 @@ import React, { memo } from 'react'
 import styled, { keyframes } from 'styled-components'
 
 // 웜 크림/베이지 색상 (새로운 팔레트와 조화)
-const warmBeige = 'rgba(201, 169, 98, 0.2)'      // 골드 베이스 (더 통일감)
-const warmBeigeLight = 'rgba(180, 160, 130, 0.15)' // 연한 베이지
+const warmBeige = 'rgba(201, 169, 98, 0.28)'      // 골드 베이스 (더 통일감)
+const warmBeigeLight = 'rgba(180, 160, 130, 0.22)' // 연한 베이지
 
 // 단일 회전 애니메이션 (GPU 가속)
 const rotate = keyframes`
@@ -44,7 +44,7 @@ const RotatingLayer = styled.svg`
   height: 200vmax;
   transform: translate(-50%, -50%);
   will-change: transform;
-  animation: ${rotate} 600s linear infinite;
+  animation: ${rotate} 420s linear infinite;
 `
 
 const ArtDecoBackground = memo(function ArtDecoBackground() {

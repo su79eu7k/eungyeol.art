@@ -4,6 +4,8 @@ import { theme, media } from '../styles/theme'
 import { fadeInUp } from '../styles/animations'
 import { PageTitle } from '../components/shared'
 import { usePageTitle } from '../hooks/usePageTitle'
+import { LanguageTransition } from '../components/PageTransition'
+import { useLanguage } from '../contexts/LanguageContext'
 
 const Container = styled.div`
   display: flex;
@@ -14,7 +16,8 @@ const Container = styled.div`
   animation: ${fadeInUp} 0.8s ease-out;
 `
 
-const Section = styled.section`
+// 이미지+텍스트 그리드 레이아웃 섹션 (shared/Section과 다른 용도)
+const StorySection = styled.section`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: ${theme.spacing['3xl']};
@@ -50,7 +53,7 @@ const Section = styled.section`
 const ImageWrapper = styled.div`
   position: relative;
   overflow: hidden;
-  border-radius: ${theme.radii.md};
+  border-radius: ${theme.radii.xl};
 
   &::before {
     content: '';
@@ -60,7 +63,7 @@ const ImageWrapper = styled.div`
     right: 0;
     bottom: 0;
     border: 1px solid ${theme.colors.goldMuted};
-    border-radius: ${theme.radii.md};
+    border-radius: ${theme.radii.xl};
     pointer-events: none;
     z-index: 1;
   }
@@ -69,7 +72,8 @@ const ImageWrapper = styled.div`
     width: 100%;
     height: auto;
     display: block;
-    transition: transform ${theme.transitions.slow};
+    transition: transform 0.4s ease-out;
+    will-change: transform;
   }
 
   &:hover img {
@@ -172,7 +176,8 @@ const stories = {
   ],
 }
 
-function Home({ lang }) {
+function Home() {
+  const { lang } = useLanguage()
   const currentStories = stories[lang] || stories.Korean
   const pageTitle = lang === 'English' ? 'Her Story' : '그녀의 이야기'
 
@@ -180,19 +185,21 @@ function Home({ lang }) {
 
   return (
     <Container>
-      <PageTitle>{pageTitle}</PageTitle>
+      <LanguageTransition lang={lang}>
+        <PageTitle>{pageTitle}</PageTitle>
 
-      {currentStories.map((story, index) => (
-        <Section key={index} delay={`${0.2 + index * 0.15}s`}>
-          <ImageWrapper>
-            <img src={story.image} alt={story.alt} loading="lazy" />
-          </ImageWrapper>
-          <TextContent>
-            {index === 0 && <QuoteMark>"</QuoteMark>}
-            <StoryText>{story.text}</StoryText>
-          </TextContent>
-        </Section>
-      ))}
+        {currentStories.map((story, index) => (
+          <StorySection key={index} delay={`${0.2 + index * 0.15}s`}>
+            <ImageWrapper>
+              <img src={story.image} alt={story.alt} loading="lazy" />
+            </ImageWrapper>
+            <TextContent>
+              {index === 0 && <QuoteMark>"</QuoteMark>}
+              <StoryText>{story.text}</StoryText>
+            </TextContent>
+          </StorySection>
+        ))}
+      </LanguageTransition>
     </Container>
   )
 }

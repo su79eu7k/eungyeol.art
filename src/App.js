@@ -1,15 +1,19 @@
-import React, { useState } from 'react'
-import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom'
+import React, { lazy, Suspense } from 'react'
+import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom'
 import styled from 'styled-components'
 import { theme } from './styles/theme'
+import { LanguageProvider } from './contexts/LanguageContext'
 import NavBar from './components/NavBar'
 import Footer from './components/Footer'
 import ScrollToTop from './components/ScrollToTop'
 import ArtDecoBackground from './components/ArtDecoBackground'
-import About from './pages/About'
-import Arts from './pages/Arts'
-import Home from './pages/Home'
-import Landing from './pages/Landing'
+import PageTransition from './components/PageTransition'
+
+// Lazy loading for better performance
+const Landing = lazy(() => import('./pages/Landing'))
+const Home = lazy(() => import('./pages/Home'))
+const Arts = lazy(() => import('./pages/Arts'))
+const About = lazy(() => import('./pages/About'))
 
 const AppContainer = styled.div`
   display: flex;
@@ -29,39 +33,39 @@ const Main = styled.main`
   }
 `
 
-function App() {
-  const [lang, setLang] = useState('Korean')
-
+// 메인 페이지용 레이아웃
+function MainLayout() {
   return (
-    <BrowserRouter>
-      <ScrollToTop />
-      <ArtDecoBackground />
+    <AppContainer>
+      <NavBar />
+      <Main>
+        <PageTransition>
+          <Outlet />
+        </PageTransition>
+      </Main>
+      <Footer />
+    </AppContainer>
+  )
+}
 
-      <Route exact path="/">
-        <Landing />
-      </Route>
-
-      <Route path={['/home', '/arts', '/about']}>
-        <AppContainer>
-          <NavBar lang={lang} setLang={setLang} />
-          <Main>
-            <Switch>
-              <Redirect from='/' to='/home' exact />
-              <Route path='/home'>
-                <Home lang={lang} />
-              </Route>
-              <Route path='/arts'>
-                <Arts />
-              </Route>
-              <Route path='/about'>
-                <About lang={lang} />
-              </Route>
-            </Switch>
-          </Main>
-          <Footer />
-        </AppContainer>
-      </Route>
-    </BrowserRouter>
+function App() {
+  return (
+    <LanguageProvider>
+      <BrowserRouter>
+        <ScrollToTop />
+        <ArtDecoBackground />
+        <Suspense fallback={null}>
+          <Routes>
+            <Route path="/" element={<Landing />} />
+            <Route element={<MainLayout />}>
+              <Route path="/home" element={<Home />} />
+              <Route path="/arts" element={<Arts />} />
+              <Route path="/about" element={<About />} />
+            </Route>
+          </Routes>
+        </Suspense>
+      </BrowserRouter>
+    </LanguageProvider>
   )
 }
 

@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { NavLink } from 'react-router-dom'
 import styled from 'styled-components'
 import { theme, media } from '../styles/theme'
+import { useLanguage } from '../contexts/LanguageContext'
 
 const Header = styled.header`
   position: sticky;
@@ -10,11 +11,11 @@ const Header = styled.header`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: ${theme.spacing.xl} ${theme.spacing['2xl']};
+  padding: ${theme.spacing.md} ${theme.spacing['2xl']};
   background-color: ${props =>
     props.scrolled
-      ? 'rgba(255, 252, 247, 0.92)'
-      : 'rgba(255, 252, 247, 0.7)'};
+      ? 'rgba(247, 243, 236, 0.92)'
+      : 'rgba(247, 243, 236, 0.75)'};
   backdrop-filter: blur(10px);
   transition: all ${theme.transitions.normal};
   border-bottom: 1px solid ${props =>
@@ -23,7 +24,7 @@ const Header = styled.header`
       : 'transparent'};
 
   ${media.md} {
-    padding: ${theme.spacing.lg} ${theme.spacing.xl};
+    padding: ${theme.spacing.sm} ${theme.spacing.lg};
   }
 `
 
@@ -61,10 +62,10 @@ const SubLogo = styled.span`
 `
 
 const Nav = styled.nav`
-  margin-top: ${theme.spacing.lg};
+  margin-top: ${theme.spacing.sm};
 
   ${media.md} {
-    margin-top: ${theme.spacing.md};
+    margin-top: ${theme.spacing.xs};
   }
 `
 
@@ -145,10 +146,14 @@ const LangButton = styled.button`
   border: none;
   padding: ${theme.spacing.sm} 0;
   cursor: pointer;
-  transition: color ${theme.transitions.fast};
+  transition: color ${theme.transitions.fast}, transform 0.2s ease;
 
   &:hover {
     color: ${theme.colors.gold};
+  }
+
+  &:active {
+    transform: scale(0.95);
   }
 
   &:focus-visible {
@@ -162,21 +167,27 @@ const LangButton = styled.button`
   }
 `
 
-function NavBar({ lang, setLang }) {
+function NavBar() {
+  const { lang, toggleLang } = useLanguage()
   const [scrolled, setScrolled] = useState(false)
+  const ticking = useRef(false)
+
+  const updateScrolled = useCallback(() => {
+    setScrolled(window.scrollY > 50)
+    ticking.current = false
+  }, [])
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50)
+      if (!ticking.current) {
+        window.requestAnimationFrame(updateScrolled)
+        ticking.current = true
+      }
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
-
-  const handleLang = () => {
-    setLang(lang === 'English' ? 'Korean' : 'English')
-  }
+  }, [updateScrolled])
 
   return (
     <Header scrolled={scrolled}>
@@ -199,7 +210,7 @@ function NavBar({ lang, setLang }) {
           <Divider />
           <NavItem>
             <LangButton
-              onClick={handleLang}
+              onClick={toggleLang}
               aria-label={`Change language to ${lang === 'English' ? 'Korean' : 'English'}`}
             >
               {lang === 'English' ? 'KR' : 'EN'}

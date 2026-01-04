@@ -1,12 +1,8 @@
 import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react'
-import styled, { css, keyframes } from 'styled-components'
-import { MdChevronLeft, MdChevronRight, MdExpandMore, MdExpandLess } from 'react-icons/md'
+import styled, { css } from 'styled-components'
+import { IconChevronLeft, IconChevronRight, IconExpandMore, IconExpandLess } from './Icons'
 import { theme, media } from '../styles/theme'
-
-const fadeIn = keyframes`
-  from { opacity: 0; }
-  to { opacity: 1; }
-`
+import { fadeIn } from '../styles/animations'
 
 const ViewerContainer = styled.div`
   display: flex;
@@ -45,12 +41,14 @@ const MainImage = styled.img`
   max-width: 100%;
   max-height: 65vh;
   object-fit: contain;
+  border-radius: ${theme.radii.md};
   animation: ${props => props.$loaded ? css`${fadeIn} 0.3s ease-out` : 'none'};
   opacity: ${props => props.$loaded ? 1 : 0};
   transform: scale(${props => props.$scale || 1});
   transform-origin: ${props => props.$transformOrigin || 'center center'};
-  transition: transform 0.2s ease-out;
+  transition: transform 0.2s ease-out, opacity 0.2s ease-out;
   cursor: ${props => props.$scale > 1 ? 'zoom-out' : 'zoom-in'};
+  will-change: transform, opacity;
 
   ${media.md} {
     max-height: 60vh;
@@ -89,8 +87,8 @@ const NavButton = styled.button`
   justify-content: center;
   width: 48px;
   height: 48px;
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: ${theme.colors.overlayLight};
+  border: 1px solid ${theme.colors.glassBorder};
   border-radius: 50%;
   color: ${theme.colors.white};
   cursor: pointer;
@@ -100,7 +98,7 @@ const NavButton = styled.button`
 
   &:hover {
     opacity: 1;
-    background: rgba(0, 0, 0, 0.5);
+    background: ${theme.colors.overlayDark};
     border-color: ${theme.colors.gold};
     color: ${theme.colors.gold};
   }
@@ -109,8 +107,8 @@ const NavButton = styled.button`
     opacity: 0.2;
     cursor: not-allowed;
     &:hover {
-      background: rgba(0, 0, 0, 0.3);
-      border-color: rgba(255, 255, 255, 0.2);
+      background: ${theme.colors.overlayLight};
+      border-color: ${theme.colors.glassBorder};
       color: ${theme.colors.white};
     }
   }
@@ -145,15 +143,15 @@ const Counter = styled.div`
   transform: translateX(-50%);
   font-family: ${theme.fonts.body};
   font-size: ${theme.fontSizes.sm};
-  color: rgba(255, 255, 255, 0.7);
-  background: rgba(0, 0, 0, 0.4);
+  color: ${theme.colors.glassText};
+  background: ${theme.colors.overlayMedium};
   padding: ${theme.spacing.xs} ${theme.spacing.md};
   border-radius: ${theme.radii.full};
   letter-spacing: 0.1em;
 `
 
 const ThumbnailContainer = styled.div`
-  background: rgba(0, 0, 0, 0.3);
+  background: ${theme.colors.overlayLight};
   transition: all ${theme.transitions.normal};
 
   ${media.sm} {
@@ -167,7 +165,7 @@ const ThumbnailToggle = styled.button`
   padding: ${theme.spacing.xs};
   background: transparent;
   border: none;
-  color: rgba(255, 255, 255, 0.6);
+  color: ${theme.colors.glassTextMuted};
   cursor: pointer;
   transition: color ${theme.transitions.fast};
 
@@ -255,7 +253,7 @@ const SwipeHint = styled.div`
   transform: translateX(-50%);
   font-family: ${theme.fonts.body};
   font-size: ${theme.fontSizes.xs};
-  color: rgba(255, 255, 255, 0.4);
+  color: ${theme.colors.glassTextSubtle};
   animation: ${fadeIn} 1s ease-out;
   animation-delay: 1s;
   animation-fill-mode: backwards;
@@ -430,7 +428,7 @@ function ImageViewer({ images, startIndex = 0, onClose }) {
           disabled={currentIndex === 0}
           aria-label="Previous image"
         >
-          <MdChevronLeft />
+          <IconChevronLeft />
         </NavButton>
 
         <NavButton
@@ -439,7 +437,7 @@ function ImageViewer({ images, startIndex = 0, onClose }) {
           disabled={currentIndex === images.length - 1}
           aria-label="Next image"
         >
-          <MdChevronRight />
+          <IconChevronRight />
         </NavButton>
 
         <Counter>
@@ -451,7 +449,7 @@ function ImageViewer({ images, startIndex = 0, onClose }) {
 
       <ThumbnailContainer>
         <ThumbnailToggle onClick={toggleThumbnails} aria-label="Toggle thumbnails">
-          {thumbnailsVisible ? <MdExpandMore /> : <MdExpandLess />}
+          {thumbnailsVisible ? <IconExpandMore /> : <IconExpandLess />}
         </ThumbnailToggle>
         <ThumbnailStrip ref={thumbnailRef} $visible={thumbnailsVisible}>
           {images.map((image, index) => (

@@ -1,7 +1,7 @@
 import React, { useEffect, useCallback } from 'react'
+import { createPortal } from 'react-dom'
 import styled, { keyframes, css } from 'styled-components'
-import Portal from './Portal'
-import { MdClose } from 'react-icons/md'
+import { IconClose } from './Icons'
 import { theme, media } from '../styles/theme'
 
 const fadeIn = keyframes`
@@ -140,8 +140,8 @@ function Modal({ visible, setFocus, allowScroll, children }) {
     }
   }, [allowScroll])
 
-  return (
-    <Portal container='modal-root'>
+  return createPortal(
+    <>
       <ModalOverlay visible={visible} onClick={handleClose} />
       <ModalWrapper
         visible={visible}
@@ -153,11 +153,12 @@ function Modal({ visible, setFocus, allowScroll, children }) {
           onClick={handleClose}
           aria-label="Close modal"
         >
-          <MdClose />
+          <IconClose />
         </CloseButton>
         {children}
       </ModalWrapper>
-    </Portal>
+    </>,
+    document.getElementById('modal-root')
   )
 }
 

@@ -52,6 +52,3 @@ export const Section = styled.section`
     margin-bottom: ${theme.spacing['2xl']};
   }
 `
-
-// 공용 로더 컴포넌트
-export { default as Loader } from '../Loader'

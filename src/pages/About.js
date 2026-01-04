@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import styled from 'styled-components'
 import { theme, media } from '../styles/theme'
 import { fadeInUp } from '../styles/animations'
 import { Divider } from '../components/shared'
 import { usePageTitle } from '../hooks/usePageTitle'
+import { LanguageTransition } from '../components/PageTransition'
+import { useLanguage } from '../contexts/LanguageContext'
 
 const Container = styled.div`
   display: flex;
@@ -119,12 +121,21 @@ const bioData = {
   ],
 }
 
-function About({ lang }) {
+function About() {
+  const { lang } = useLanguage()
   const currentBio = bioData[lang] || bioData.Korean
-  const currentYear = new Date().getFullYear()
-  const birthYear = 1952
-  const age = currentYear - birthYear
   const pageTitle = lang === 'English' ? 'About' : '작가 소개'
+
+  // 연도 계산 (렌더링마다 재계산 방지)
+  const { currentYear, yearsFromBirth } = useMemo(() => {
+    const now = new Date()
+    const year = now.getFullYear()
+    const birthYear = 1952
+    return {
+      currentYear: year,
+      yearsFromBirth: year - birthYear
+    }
+  }, [])
 
   usePageTitle(pageTitle, lang)
 
@@ -134,29 +145,33 @@ function About({ lang }) {
         <PortraitWrapper>
           <Portrait src="/assets/portrait.jpg" alt="Portrait of EunGyeol" />
         </PortraitWrapper>
-        <Name>
-          {lang === 'English' ? 'Lee, Mi Sun' : '이미선'}
-        </Name>
-        <Title>
-          {lang === 'English' ? 'Artist · EunGyeol' : '화가 · 은결'}
-        </Title>
+        <LanguageTransition lang={lang}>
+          <Name>
+            {lang === 'English' ? 'Lee, Mi Sun' : '이미선'}
+          </Name>
+          <Title>
+            {lang === 'English' ? 'Artist · EunGyeol' : '화가 · 은결'}
+          </Title>
+        </LanguageTransition>
       </ProfileSection>
 
       <Divider />
 
-      <BioSection>
-        {currentBio.map((paragraph, index) => (
-          <BioParagraph key={index}>
-            {paragraph}
+      <LanguageTransition lang={lang}>
+        <BioSection>
+          {currentBio.map((paragraph, index) => (
+            <BioParagraph key={index}>
+              {paragraph}
+            </BioParagraph>
+          ))}
+          <BioParagraph>
+            {lang === 'English'
+              ? <><Highlight>{currentYear}</Highlight> marks {yearsFromBirth} years since her birth.</>
+              : <><Highlight>{currentYear}</Highlight>년은 그녀의 탄생 {yearsFromBirth}주년이 되는 해이다.</>
+            }
           </BioParagraph>
-        ))}
-        <BioParagraph>
-          {lang === 'English'
-            ? <><Highlight>{currentYear}</Highlight> marks the year of her {age}th birthday.</>
-            : <><Highlight>{currentYear}</Highlight>년은 그녀의 탄생 {age}주년이 되는 해이다.</>
-          }
-        </BioParagraph>
-      </BioSection>
+        </BioSection>
+      </LanguageTransition>
     </Container>
   )
 }

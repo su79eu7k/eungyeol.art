@@ -1,25 +1,8 @@
-import React, { useEffect, useCallback, useState } from 'react'
-import { useHistory } from 'react-router-dom'
-import styled, { keyframes } from 'styled-components'
+import React, { useEffect, useCallback, useRef } from 'react'
+import { useNavigate } from 'react-router-dom'
+import styled from 'styled-components'
 import { theme, media } from '../styles/theme'
-
-// 빠른 페이드 인 애니메이션
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-    transform: translateY(15px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-`
-
-// 스크롤 인디케이터 바운스
-const bounce = keyframes`
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
-`
+import { fadeInUp, bounce } from '../styles/animations'
 
 const Container = styled.div`
   position: relative;
@@ -58,7 +41,7 @@ const Logo = styled.h1`
   letter-spacing: 0.15em;
   margin: 0;
   opacity: 0;
-  animation: ${fadeIn} 0.6s ease-out forwards;
+  animation: ${fadeInUp} 0.6s ease-out forwards;
 
   ${media.md} {
     font-size: ${theme.fontSizes['5xl']};
@@ -77,7 +60,7 @@ const SubLogo = styled.p`
   letter-spacing: 0.1em;
   margin-top: ${theme.spacing.md};
   opacity: 0;
-  animation: ${fadeIn} 0.6s ease-out 0.15s forwards;
+  animation: ${fadeInUp} 0.6s ease-out 0.15s forwards;
 
   ${media.md} {
     font-size: ${theme.fontSizes.xl};
@@ -99,7 +82,7 @@ const Divider = styled.div`
   );
   margin: ${theme.spacing.xl} 0;
   opacity: 0;
-  animation: ${fadeIn} 0.6s ease-out 0.3s forwards;
+  animation: ${fadeInUp} 0.6s ease-out 0.3s forwards;
 `
 
 const Tagline = styled.p`
@@ -110,7 +93,7 @@ const Tagline = styled.p`
   letter-spacing: 0.2em;
   text-transform: uppercase;
   opacity: 0;
-  animation: ${fadeIn} 0.6s ease-out 0.4s forwards;
+  animation: ${fadeInUp} 0.6s ease-out 0.4s forwards;
 
   ${media.sm} {
     font-size: ${theme.fontSizes.sm};
@@ -127,7 +110,7 @@ const ScrollIndicator = styled.div`
   flex-direction: column;
   align-items: center;
   opacity: 0;
-  animation: ${fadeIn} 0.6s ease-out 0.6s forwards;
+  animation: ${fadeInUp} 0.6s ease-out 0.6s forwards;
 `
 
 const ScrollText = styled.span`
@@ -149,15 +132,15 @@ const ScrollArrow = styled.div`
 `
 
 function Landing() {
-  const [isNavigating, setIsNavigating] = useState(false)
-  const history = useHistory()
+  const navigate = useNavigate()
+  const isNavigatingRef = useRef(false)
 
   const navigateToHome = useCallback(() => {
-    if (!isNavigating) {
-      setIsNavigating(true)
-      history.push('/home')
+    if (!isNavigatingRef.current) {
+      isNavigatingRef.current = true
+      navigate('/home')
     }
-  }, [history, isNavigating])
+  }, [navigate])
 
   useEffect(() => {
     const handleWheel = (e) => {
