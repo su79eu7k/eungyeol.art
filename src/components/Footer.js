@@ -8,7 +8,8 @@ const StyledFooter = styled.footer`
   align-items: center;
   justify-content: center;
   padding: ${theme.spacing['2xl']} ${theme.spacing.xl};
-  background-color: ${theme.colors.backgroundAlt};
+  background-color: rgba(247, 243, 236, 0.8);
+  backdrop-filter: blur(10px);
   border-top: 1px solid ${theme.colors.goldSubtle};
 `
 

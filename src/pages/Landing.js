@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useCallback, useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import styled, { keyframes } from 'styled-components'
 import { theme, media } from '../styles/theme'
-import ArtDecoBackground from '../components/ArtDecoBackground'
 
-// 부드러운 페이드 인 애니메이션
+// 빠른 페이드 인 애니메이션
 const fadeIn = keyframes`
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(15px);
   }
   to {
     opacity: 1;
@@ -15,28 +15,10 @@ const fadeIn = keyframes`
   }
 `
 
-const fadeInDelayed = keyframes`
-  0% {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-`
-
 // 스크롤 인디케이터 바운스
 const bounce = keyframes`
-  0%, 20%, 50%, 80%, 100% {
-    transform: translateY(0) translateX(-50%);
-  }
-  40% {
-    transform: translateY(-8px) translateX(-50%);
-  }
-  60% {
-    transform: translateY(-4px) translateX(-50%);
-  }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
 `
 
 const Container = styled.div`
@@ -47,8 +29,7 @@ const Container = styled.div`
   align-items: center;
   min-height: 100vh;
   width: 100%;
-  background-color: ${theme.colors.background};
-  overflow: hidden;
+  cursor: pointer;
 `
 
 const ContentWrapper = styled.div`
@@ -59,8 +40,6 @@ const ContentWrapper = styled.div`
   align-items: center;
   text-align: center;
   padding: ${theme.spacing['2xl']};
-  transform: translateY(${props => -props.offset * 0.3}px);
-  transition: transform 0.1s ease-out;
 
   ${media.md} {
     padding: ${theme.spacing.xl};
@@ -78,7 +57,8 @@ const Logo = styled.h1`
   color: ${theme.colors.textPrimary};
   letter-spacing: 0.15em;
   margin: 0;
-  animation: ${fadeIn} 1.5s ease-out forwards;
+  opacity: 0;
+  animation: ${fadeIn} 0.6s ease-out forwards;
 
   ${media.md} {
     font-size: ${theme.fontSizes['5xl']};
@@ -97,7 +77,7 @@ const SubLogo = styled.p`
   letter-spacing: 0.1em;
   margin-top: ${theme.spacing.md};
   opacity: 0;
-  animation: ${fadeInDelayed} 1.5s ease-out 0.5s forwards;
+  animation: ${fadeIn} 0.6s ease-out 0.15s forwards;
 
   ${media.md} {
     font-size: ${theme.fontSizes.xl};
@@ -119,7 +99,7 @@ const Divider = styled.div`
   );
   margin: ${theme.spacing.xl} 0;
   opacity: 0;
-  animation: ${fadeInDelayed} 1.5s ease-out 0.8s forwards;
+  animation: ${fadeIn} 0.6s ease-out 0.3s forwards;
 `
 
 const Tagline = styled.p`
@@ -130,7 +110,7 @@ const Tagline = styled.p`
   letter-spacing: 0.2em;
   text-transform: uppercase;
   opacity: 0;
-  animation: ${fadeInDelayed} 1.5s ease-out 1s forwards;
+  animation: ${fadeIn} 0.6s ease-out 0.4s forwards;
 
   ${media.sm} {
     font-size: ${theme.fontSizes.sm};
@@ -147,7 +127,7 @@ const ScrollIndicator = styled.div`
   flex-direction: column;
   align-items: center;
   opacity: 0;
-  animation: ${fadeInDelayed} 1.5s ease-out 1.5s forwards;
+  animation: ${fadeIn} 0.6s ease-out 0.6s forwards;
 `
 
 const ScrollText = styled.span`
@@ -160,37 +140,66 @@ const ScrollText = styled.span`
 `
 
 const ScrollArrow = styled.div`
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   border-right: 1px solid ${theme.colors.gold};
   border-bottom: 1px solid ${theme.colors.gold};
   transform: rotate(45deg);
-  animation: ${bounce} 2s ease-in-out infinite;
-  animation-delay: 2s;
+  animation: ${bounce} 1.5s ease-in-out infinite;
 `
 
 function Landing() {
-  const [offset, setOffset] = useState(0)
+  const [isNavigating, setIsNavigating] = useState(false)
+  const history = useHistory()
+
+  const navigateToHome = useCallback(() => {
+    if (!isNavigating) {
+      setIsNavigating(true)
+      history.push('/home')
+    }
+  }, [history, isNavigating])
 
   useEffect(() => {
-    const handleScroll = () => {
-      requestAnimationFrame(() => {
-        setOffset(window.pageYOffset)
-      })
+    const handleWheel = (e) => {
+      if (e.deltaY > 20) {
+        navigateToHome()
+      }
     }
 
-    window.addEventListener('scroll', handleScroll, { passive: true })
+    const handleKeyDown = (e) => {
+      if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') {
+        navigateToHome()
+      }
+    }
+
+    let touchStartY = 0
+    const handleTouchStart = (e) => {
+      touchStartY = e.touches[0].clientY
+    }
+
+    const handleTouchEnd = (e) => {
+      const diff = touchStartY - e.changedTouches[0].clientY
+      if (diff > 30) {
+        navigateToHome()
+      }
+    }
+
+    window.addEventListener('wheel', handleWheel, { passive: true })
+    window.addEventListener('keydown', handleKeyDown)
+    window.addEventListener('touchstart', handleTouchStart, { passive: true })
+    window.addEventListener('touchend', handleTouchEnd, { passive: true })
 
     return () => {
-      window.removeEventListener('scroll', handleScroll)
+      window.removeEventListener('wheel', handleWheel)
+      window.removeEventListener('keydown', handleKeyDown)
+      window.removeEventListener('touchstart', handleTouchStart)
+      window.removeEventListener('touchend', handleTouchEnd)
     }
-  }, [])
+  }, [navigateToHome])
 
   return (
-    <Container>
-      <ArtDecoBackground />
-
-      <ContentWrapper offset={offset}>
+    <Container onClick={navigateToHome}>
+      <ContentWrapper>
         <LogoWrapper>
           <Logo>EunGyeol</Logo>
           <SubLogo>은결 · 이미선</SubLogo>

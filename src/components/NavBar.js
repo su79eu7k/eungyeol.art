@@ -13,9 +13,9 @@ const Header = styled.header`
   padding: ${theme.spacing.xl} ${theme.spacing['2xl']};
   background-color: ${props =>
     props.scrolled
-      ? 'rgba(250, 248, 245, 0.95)'
-      : theme.colors.background};
-  backdrop-filter: ${props => props.scrolled ? 'blur(10px)' : 'none'};
+      ? 'rgba(255, 252, 247, 0.92)'
+      : 'rgba(255, 252, 247, 0.7)'};
+  backdrop-filter: blur(10px);
   transition: all ${theme.transitions.normal};
   border-bottom: 1px solid ${props =>
     props.scrolled

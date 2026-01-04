@@ -5,6 +5,7 @@ import { theme } from './styles/theme'
 import NavBar from './components/NavBar'
 import Footer from './components/Footer'
 import ScrollToTop from './components/ScrollToTop'
+import ArtDecoBackground from './components/ArtDecoBackground'
 import About from './pages/About'
 import Arts from './pages/Arts'
 import Home from './pages/Home'
@@ -14,7 +15,6 @@ const AppContainer = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-color: ${theme.colors.background};
 `
 
 const Main = styled.main`
@@ -35,6 +35,8 @@ function App() {
   return (
     <BrowserRouter>
       <ScrollToTop />
+      <ArtDecoBackground />
+
       <Route exact path="/">
         <Landing />
       </Route>

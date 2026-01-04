@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useCallback } from "react"
 import Modal from "../components/Modal"
-import Gallery from "react-photo-gallery"
-import ImageGallery from "react-image-gallery"
+import MasonryGallery from "../components/MasonryGallery"
+import ImageViewer from "../components/ImageViewer"
 import { photos } from "../photos"
-import './Arts.css'
 import styled from 'styled-components'
 import { theme } from '../styles/theme'
 import { fadeIn, spin } from '../styles/animations'
@@ -32,14 +31,6 @@ const GalleryWrapper = styled.div`
   }
 `
 
-const LoaderWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: ${theme.spacing['4xl']} 0;
-`
-
 const Loader = styled.div`
   width: 40px;
   height: 40px;
@@ -66,13 +57,23 @@ const EndMessage = styled.p`
   letter-spacing: 0.05em;
 `
 
+const IntersectionTrigger = styled.div`
+  width: 100%;
+  min-height: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: ${theme.spacing['2xl']} 0;
+`
+
 function Arts() {
   const [images, setImages] = useState([])
   const [focus, setFocus] = useState(false)
   const [focusIdx, setFocusIdx] = useState(0)
   const [intersection, setIntersection] = useState(null)
   const [loadingIdx, setLoadingIdx] = useState(10)
-  const [isLoaded, setIsLoaded] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   usePageTitle('Gallery')
 
@@ -80,25 +81,25 @@ function Arts() {
     e.preventDefault()
   }, [])
 
-  const rejectScroll = () => {
+  const rejectScroll = useCallback(() => {
     document.body.style.overflow = 'hidden'
     document.body.addEventListener('touchmove', handleTouchMove, {
       capture: false,
       once: false,
       passive: false
     })
-  }
+  }, [handleTouchMove])
 
-  const allowScroll = () => {
+  const allowScroll = useCallback(() => {
     document.body.style.overflow = 'auto'
     document.body.removeEventListener('touchmove', handleTouchMove)
-  }
+  }, [handleTouchMove])
 
-  const focusHandler = (event, { index }) => {
+  const focusHandler = useCallback((index) => {
     rejectScroll()
     setFocus(true)
     setFocusIdx(index)
-  }
+  }, [rejectScroll])
 
   const getMeta = async (url) => {
     const img = new Image()
@@ -112,27 +113,45 @@ function Arts() {
   }
 
   useEffect(() => {
+    let cancelled = false
+
     async function fetchData() {
+      const startIdx = loadingIdx - 10
+      const endIdx = Math.min(loadingIdx, photos.length)
+
+      if (startIdx >= photos.length || startIdx < 0) {
+        return
+      }
+
+      setIsLoading(true)
+
       const getImgs = async () => {
         return await Promise.all(
-          photos.slice(loadingIdx - 10, loadingIdx).map(async (elem) => {
+          photos.slice(startIdx, endIdx).map(async (elem, idx) => {
             const meta = await getMeta(elem['original'])
-            return { ...elem, ...meta }
+            return { ...elem, ...meta, id: `photo-${startIdx + idx}` }
           })
         )
       }
 
       const _images = await getImgs()
-      setImages(images => images.concat(_images))
-      setIsLoaded(true)
+      if (!cancelled) {
+        setImages(prev => {
+          const existingIds = new Set(prev.map(img => img.id))
+          const newImages = _images.filter(img => !existingIds.has(img.id))
+          return [...prev, ...newImages]
+        })
+        setIsLoading(false)
+      }
     }
     fetchData()
+
+    return () => { cancelled = true }
   }, [loadingIdx])
 
   useEffect(() => {
     const onIntersect = ([entry]) => {
-      if (entry.isIntersecting) {
-        setIsLoaded(false)
+      if (entry.isIntersecting && !isLoading && loadingIdx <= photos.length) {
         setLoadingIdx(prevIdx => prevIdx + 10)
       }
     }
@@ -144,7 +163,7 @@ function Arts() {
     }
 
     return () => observer && observer.disconnect()
-  }, [intersection])
+  }, [intersection, isLoading, loadingIdx])
 
   const isAllLoaded = loadingIdx > photos.length
 
@@ -154,17 +173,19 @@ function Arts() {
 
       <GalleryWrapper>
         {images.length > 0 && (
-          <Gallery photos={images} onClick={focusHandler} margin={4} />
+          <MasonryGallery photos={images} onClick={focusHandler} />
         )}
       </GalleryWrapper>
 
-      {isLoaded && !isAllLoaded && <div ref={setIntersection}></div>}
-
-      {!isLoaded && (
-        <LoaderWrapper>
-          <Loader />
-          <LoaderText>Loading artworks...</LoaderText>
-        </LoaderWrapper>
+      {!isAllLoaded && (
+        <IntersectionTrigger ref={setIntersection}>
+          {isLoading && (
+            <>
+              <Loader />
+              <LoaderText>Loading artworks...</LoaderText>
+            </>
+          )}
+        </IntersectionTrigger>
       )}
 
       {isAllLoaded && (
@@ -173,7 +194,14 @@ function Arts() {
 
       {focus && (
         <Modal visible={focus} setFocus={setFocus} allowScroll={allowScroll}>
-          <ImageGallery items={images} startIndex={focusIdx} />
+          <ImageViewer
+            images={images}
+            startIndex={focusIdx}
+            onClose={() => {
+              setFocus(false)
+              allowScroll()
+            }}
+          />
         </Modal>
       )}
     </Container>

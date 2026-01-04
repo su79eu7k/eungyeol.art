@@ -174,7 +174,7 @@ const stories = {
 
 function Home({ lang }) {
   const currentStories = stories[lang] || stories.Korean
-  const pageTitle = lang === 'English' ? 'My Story' : '나의 이야기'
+  const pageTitle = lang === 'English' ? 'Her Story' : '그녀의 이야기'
 
   usePageTitle(pageTitle, lang)
 

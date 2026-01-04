@@ -106,16 +106,16 @@ const Highlight = styled.span`
 // 바이오 데이터
 const bioData = {
   Korean: [
-    '은결은 한국의 화가이다.',
-    '1952년 3월 23일 대한민국 경상북도 안동에서 출생하였으며 독실한 기독교 가정에서 자랐다. 어린 시절부터 자연 속 삶에 매료되어 13세 때에는 실제로 이를 직접 실행에 옮기기도 하였다.',
-    '경북대학교 사범대학을 졸업하여 화학 교사를 역임하였다. 이후 해외 주재원 생활을 하게 된 현재의 배우자와 결혼하여, 그를 따라 프랑스 벨포로 이주 후 그 곳에서 수년간의 해외 생활을 하였다. 그 시절 그녀는 유럽의 많은 나라들을 여행할 기회를 갖게 되었으며, 그 곳의 다양한 회화, 예술, 문화들은 그녀의 작품세계에도 적지 않은 영향을 끼치게 되었다.',
-    '그녀는 그녀의 전 생애에 걸쳐 그림을 그렸다. 현재 사랑받는 아내이며, 두 아들의 어머니이자 네 아이들의 할머니이기도 하다. 그리고 아직도 하나님의 사랑과 계획하심 안에 시골 어딘가에서 자유로운 삶을 살게되길 꿈꾸고 있다.',
+    '은결(이미선)은 한국의 화가이다.',
+    '1952년 경북 안동에서 태어나 기독교 집안에서 자랐다. 어린 시절부터 자연과 함께하는 삶을 동경했다.',
+    '경북대학교 사범대학에서 화학을 전공했다. 결혼 후 남편의 해외 발령을 따라 프랑스 벨포에서 수년간 생활했다. 이 시기에 유럽 여러 나라를 여행하며 다양한 예술과 문화를 접했고, 이는 그녀의 작품에 영향을 주었다.',
+    '평생 그림을 그려왔다. 지금은 두 아들과 네 손주를 둔 할머니로, 여전히 자연 속에서의 소박한 삶을 꿈꾸고 있다.',
   ],
   English: [
-    'EunGyeol is a contemporary Korean painting artist.',
-    'She was born in Andong, a small city placed in the southern east area of South Korea, on March 23, 1952. She was raised in a devout Christian family. Since childhood, she was attracted by living in nature, and she actually tried it when she was thirteen.',
-    'She graduated from Kyungpook National University as a chemistry teacher. She married her present husband and moved to Belfort, France, following him as he was assigned as an expatriate. At that time, she had many opportunities to travel to various European countries, where she was influenced by the paintings, arts, and culture.',
-    'She has been painting throughout her whole lifetime. Now she is a beloved wife, mother of two sons, and grandmother of four children. She still dreams of living somewhere in the countryside, believing in the love of God and His plan.',
+    'EunGyeol (Lee, Mi Sun) is a Korean painter.',
+    'She was born in Andong, South Korea in 1952 and grew up in a Christian family. From an early age, she was drawn to life close to nature.',
+    "She studied chemistry education at Kyungpook National University. After marriage, she lived in Belfort, France for several years, following her husband's overseas assignment. During this time, she traveled throughout Europe, where she encountered various art and cultures that influenced her work.",
+    'She has painted throughout her life. Now a grandmother of four, she still dreams of a simple life in the countryside.',
   ],
 }
 

@@ -1,23 +1,24 @@
-// 디자인 시스템 - 웜 아이보리 + 아트데코 골드라인 테마
+// 디자인 시스템 - 웜 크림 + 초콜릿 브라운 테마
+// 부드럽고 따뜻한 갤러리 분위기
 
 export const theme = {
   // 컬러 팔레트
   colors: {
-    // 기본 배경
-    background: '#FAF8F5',      // 웜 아이보리
-    backgroundAlt: '#F5F2ED',   // 약간 어두운 아이보리
+    // 기본 배경 - 따뜻한 크림/아이보리
+    background: '#FFFCF7',      // 웜 크림 (더 밝고 따뜻하게)
+    backgroundAlt: '#F7F3EC',   // 소프트 베이지
 
     // 골드/샴페인 계열 (아트데코)
     gold: '#C9A962',            // 메인 골드
     goldLight: '#D4B978',       // 밝은 골드
     goldDark: '#A68B4B',        // 어두운 골드
-    goldMuted: 'rgba(201, 169, 98, 0.3)',  // 반투명 골드 (애니메이션용)
-    goldSubtle: 'rgba(201, 169, 98, 0.15)', // 매우 연한 골드
+    goldMuted: 'rgba(201, 169, 98, 0.35)',  // 반투명 골드 (약간 진하게)
+    goldSubtle: 'rgba(201, 169, 98, 0.18)', // 연한 골드
 
-    // 텍스트
-    textPrimary: '#2C2824',     // 거의 검은색 (제목)
-    textSecondary: '#5C5650',   // 중간 톤 (본문)
-    textMuted: '#8A847C',       // 연한 톤 (캡션, 메타)
+    // 텍스트 - 따뜻한 브라운 계열 (검정 대신 초콜릿 브라운)
+    textPrimary: '#5D4E37',     // 리치 초콜릿 브라운 (제목)
+    textSecondary: '#6B5D4D',   // 미디엄 웜 브라운 (본문)
+    textMuted: '#8B7D6B',       // 라이트 토프 (캡션, 메타)
 
     // 액센트
     accent: '#8B7355',          // 따뜻한 브라운
@@ -25,7 +26,7 @@ export const theme = {
     // 유틸리티
     white: '#FFFFFF',
     black: '#1A1816',
-    overlay: 'rgba(26, 24, 22, 0.85)',
+    overlay: 'rgba(45, 40, 35, 0.85)',  // 더 따뜻한 오버레이
   },
 
   // 타이포그래피
