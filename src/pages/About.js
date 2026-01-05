@@ -164,12 +164,6 @@ function About() {
               {paragraph}
             </BioParagraph>
           ))}
-          <BioParagraph>
-            {lang === 'English'
-              ? <><Highlight>{currentYear}</Highlight> marks her {yearsFromBirth}th year.</>
-              : <><Highlight>{currentYear}</Highlight>년, {yearsFromBirth}세가 됩니다.</>
-            }
-          </BioParagraph>
         </BioSection>
       </LanguageTransition>
     </Container>
