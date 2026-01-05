@@ -108,16 +108,16 @@ const Highlight = styled.span`
 // 바이오 데이터
 const bioData = {
   Korean: [
-    '은결, 본명 이미선. 자연의 아름다움을 화폭에 담는 한국의 화가입니다.',
-    '1952년 경북 안동에서 태어나 기독교 집안에서 자랐습니다. 어린 시절부터 푸른 산과 맑은 물이 흐르는 자연 속에서 살기를 꿈꿔왔습니다.',
-    '경북대학교 사범대학에서 화학을 전공한 뒤, 결혼 후 남편의 해외 발령을 따라 프랑스 벨포에서 수년간 생활했습니다. 이 시기에 유럽 곳곳을 여행하며 만난 다양한 예술과 문화는 그녀의 작품 세계에 깊은 영감을 주었습니다.',
-    '평생 붓을 놓지 않았습니다. 두 아들과 다섯 손주를 둔 할머니가 된 지금도, 자연 속에서 소박하게 살아가는 삶을 꿈꾸고 있습니다.',
+    '은결, 본명 이미선. 한국의 화가입니다.',
+    '1952년 경북 안동에서 태어나 기독교 집안에서 자랐습니다. 어릴 때부터 자연 속에서 사는 삶을 동경해왔습니다.',
+    '경북대학교 사범대학에서 화학을 전공했습니다. 결혼 후 남편의 해외 발령을 따라 프랑스 벨포에서 수년간 생활하며, 유럽 여러 나라를 여행했습니다. 이때 접한 다양한 예술과 문화가 작품에 영향을 주었습니다.',
+    '평생 그림을 그려왔습니다. 두 아들과 다섯 손주를 둔 할머니가 된 지금도, 자연 속 소박한 삶을 꿈꾸고 있습니다.',
   ],
   English: [
-    'EunGyeol, born Lee Mi Sun, is a Korean artist who captures the beauty of nature on canvas.',
-    'Born in Andong, South Korea in 1952, she grew up in a Christian family. From childhood, she dreamed of a life surrounded by green mountains and clear streams.',
-    "She studied chemistry education at Kyungpook National University. After marriage, she spent several years in Belfort, France, following her husband's overseas assignment. Traveling across Europe during this time, she found deep inspiration in the diverse art and cultures she encountered.",
-    'She has never put down her brush. Now a grandmother of five, she still dreams of living simply, close to nature.',
+    'EunGyeol, born Lee Mi Sun, is a Korean painter.',
+    'Born in Andong, South Korea in 1952, she grew up in a Christian family. From an early age, she longed for a life close to nature.',
+    "She studied chemistry education at Kyungpook National University. After marriage, she lived in Belfort, France for several years, following her husband's overseas assignment. During this time, she traveled across Europe, and the art and cultures she encountered influenced her work.",
+    'She has painted throughout her life. Now a grandmother of five, she still dreams of a simple life in nature.',
   ],
 }
 
@@ -166,8 +166,8 @@ function About() {
           ))}
           <BioParagraph>
             {lang === 'English'
-              ? <>In <Highlight>{currentYear}</Highlight>, she celebrates {yearsFromBirth} years of life and art.</>
-              : <><Highlight>{currentYear}</Highlight>년, 그녀는 {yearsFromBirth}번째 봄을 맞이합니다.</>
+              ? <><Highlight>{currentYear}</Highlight> marks her {yearsFromBirth}th year.</>
+              : <><Highlight>{currentYear}</Highlight>년, {yearsFromBirth}세가 됩니다.</>
             }
           </BioParagraph>
         </BioSection>
