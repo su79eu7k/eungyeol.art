@@ -109,15 +109,15 @@ const Highlight = styled.span`
 const bioData = {
   Korean: [
     '은결, 본명 이미선. 한국화를 그리는 화가입니다.',
-    '1952년 경북 안동에서 태어나 기독교 집안에서 자랐습니다. 어릴 때부터 자연 속에서 사는 삶을 동경해왔습니다.',
-    '경북대학교 사범대학에서 화학을 전공했습니다. 결혼 후 남편의 해외 발령을 따라 프랑스 벨포에서 수년간 생활하며, 유럽 여러 나라를 여행했습니다. 이때 접한 다양한 예술과 문화가 작품에 영향을 주었습니다.',
-    '평생 그림을 그려왔습니다. 두 아들과 다섯 손주를 둔 할머니가 된 지금도, 자연 속 소박한 삶을 꿈꾸고 있습니다.',
+    '1952년 경북 안동에서 태어나 기독교 집안에서 자랐고, 어린 시절부터 자연 속에서 사는 삶을 동경해왔습니다.',
+    '경북대학교 사범대학에서 화학을 전공했습니다. 결혼 후 남편의 해외 발령을 따라 프랑스 벨포에서 수년간 생활하며, 유럽 여러 나라를 여행했습니다. 이때 접한 다양한 예술과 문화가 그녀의 작품에 영향을 주었을 것으로 추정됩니다.',
+    '두 아들과 다섯 손주를 둔 할머니가 된 지금도, 자연 속 소박한 삶을 꿈꾸고 있습니다.',
   ],
   English: [
-    'EunGyeol, born Lee Mi Sun. A painter of traditional Korean art.',
-    'Born in Andong, South Korea in 1952, she grew up in a Christian family. From an early age, she longed for a life close to nature.',
-    "She studied chemistry education at Kyungpook National University. After marriage, she lived in Belfort, France for several years, following her husband's overseas assignment. During this time, she traveled across Europe, and the art and cultures she encountered influenced her work.",
-    'She has painted throughout her life. Now a grandmother of five, she still dreams of a simple life in nature.',
+    'EunGyeol, born Lee Mi-seon, is a painter specializing in Korean traditional art.',
+    'Born in Andong, Gyeongsangbuk-do in 1952, she grew up in a Christian household and has longed for a life immersed in nature since childhood.',
+    'She majored in chemistry at the College of Education at Kyungpook National University. After marriage, she lived in Belfort, France for several years, following her husband\'s overseas posting, and traveled extensively throughout Europe. The diverse art and cultures she encountered during this time are believed to have influenced her work.',
+    'Now a grandmother with two sons and five grandchildren, she still dreams of a simple life in nature.',
   ],
 }
 
